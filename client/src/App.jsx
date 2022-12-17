@@ -11,13 +11,14 @@ import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import './app.css'
 import { Toaster } from 'react-hot-toast'
+import InvitePage from "./Pages/InvitePage";
 
 const App = () => {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
         const getUser = () => {
-            fetch("http://localhost:5000/auth/login/success", {
+            fetch("http://192.168.1.123:5000/auth/login/success", {
                 method: "GET",
                 credentials: "include",
                 headers: {
@@ -40,7 +41,7 @@ const App = () => {
         getUser();
     }, []);
     return (
-        <div className="h-screen w-full">
+        <div className="min-h-screen w-full">
             <div>
                 <Toaster
                     position="top-right" toastOptions={{ success: { theme: { primary: '#4aed88', }, }, }}
@@ -50,7 +51,8 @@ const App = () => {
                 <div>
                     <Navbar user={user} />
                     <Routes>
-                        <Route path="/" element={<Home />} />
+                        <Route path="/invite" element={<InvitePage/>}/>
+                        <Route path="/" element={<Home user={user} />} />
                         <Route path="/login" element={user ? <Navigate to="/" /> : <MyLogin />} />
                     </Routes>
                 </div>

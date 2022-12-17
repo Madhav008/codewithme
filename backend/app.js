@@ -6,13 +6,13 @@ const app = express();
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-
+const realtimeEditor = require('./realtimeEditor.js')
 
 app.use(express.json())
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: process.env.clientURL,
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
@@ -24,7 +24,7 @@ const io = new Server(server, {
   }
 });
 
-
+io.on('connection', realtimeEditor)
 
 app.use(
   session({
@@ -47,7 +47,8 @@ require('./initDB')();
 const AuthRoute = require('./Routes/passport');
 app.use('/auth',AuthRoute)
 
-const JudgeRoute = require('./Routes/judge')
+const JudgeRoute = require('./Routes/judge');
+const { realpath } = require('fs');
 app.use('/',JudgeRoute);
 
 

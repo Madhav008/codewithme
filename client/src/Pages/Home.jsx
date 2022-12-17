@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import toast from 'react-hot-toast';
 import Client from '../components/Client';
 import Editor from '../components/Editor';
+import { initSocket } from '../socket';
+import {ACTIONS} from '../Action'
 import {
     useLocation,
     useNavigate,
@@ -9,9 +11,10 @@ import {
     useParams,
 } from 'react-router-dom';
 import axios from 'axios';
+import ChatComponent from '../components/ChatComponent';
 
 
-const Home = () => {
+const Home = ({ user }) => {
     const [output, setoutput] = useState({});
     const [code, setcode] = useState('');
     const socketRef = useRef(null);
@@ -82,13 +85,64 @@ const Home = () => {
 
 
     useEffect(() => {
-        toast.success(`Hi ,Thank You For Login`);
+        if (user != null) {
+            toast.success(`Hi ,Thank You For Login`);
+        }
+    }, [user])
+
+    useEffect(() => {
+        const init = async () => {
+            socketRef.current = await initSocket();
+            socketRef.current.on('connect_error', (err) => handleErrors(err));
+            socketRef.current.on('connect_failed', (err) => handleErrors(err));
+
+            function handleErrors(e) {
+                console.log('socket error', e);
+                toast.error('Socket connection failed, try again later.');
+                reactNavigator('/');
+            }
+
+            socketRef.current.emit(ACTIONS.JOIN, {
+                roomId:"roomId",
+                username: "user.displayName",
+            });
+
+            socketRef.current.on(
+                ACTIONS.JOINED,
+                ({ clients, username, socketId }) => {
+                    if (username !== location.state?.username) {
+                        toast.success(`${username} joined the room.`);
+                        console.log(`${username} joined`);
+                    }
+                    // setClients(clients);
+                    socketRef.current.emit(ACTIONS.SYNC_CODE, {
+                        code: codeRef.current,
+                        socketId,
+                    });
+                }
+            );
+
+              // Listening for disconnected
+              socketRef.current.on(
+                ACTIONS.DISCONNECTED,
+                ({ socketId, username }) => {
+                    toast.success(`${username} left the room.`);
+                    // setClients((prev) => {
+                    //     return prev.filter(
+                    //         (client) => client.socketId !== socketId
+                    //     );
+                    // });
+                }
+            );
+        };
+        init();
     }, [])
 
+
     return (
-        <div className="w-full flex ">
-            <div className=" mt-1 py-1 w-[15%] flex flex-col items-center justify-between">
-                <div>
+        <div className="w-full flex min-h-[90%]">
+            <div className=" mt-1 py-1 w-[20%] flex flex-col items-center justify-between">
+                {/* <div>
                     <h3 className='font-semibold mb-7 '>Connected Users</h3>
 
                     <div className="px-1 mx-1 flex items-center gap-2 flex-wrap">
@@ -99,15 +153,18 @@ const Home = () => {
                             />
                         ))}
                     </div>
-                </div>
+                </div> 
                 <div>
-                    <button className="btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full" onClick={copyRoomId}>
+                    <button className="btn bg-blue-500  text-white font-bold py-2 px-4 rounded w-full" onClick={copyRoomId}>
                         Copy ROOM ID
                     </button>
                     <button className="btn leaveBtn text-cyan-50" onClick={leaveRoom}>
                         Leave
                     </button>
-                </div>
+                </div> */}
+
+                <ChatComponent leaveRoom={leaveRoom} copyRoomId={copyRoomId} />
+
             </div>
 
 

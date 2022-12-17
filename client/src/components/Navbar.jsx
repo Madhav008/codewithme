@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = ({ user }) => {
     const logout = () => {
-        window.open("http://localhost:5000/auth/logout", "_self");
+        window.open("http://192.168.1.123:5000/auth/logout", "_self");
     };
     return (
         <>

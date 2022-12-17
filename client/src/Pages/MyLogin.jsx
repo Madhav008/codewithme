@@ -2,7 +2,7 @@ import React from 'react'
 const MyLogin = () => {
     const login = async (e) => {
         
-        window.open("http://localhost:5000/auth/github", "_self");        
+        window.open("http://192.168.1.123:5000/auth/github", "_self");        
     }
     return (
         <div className='h-screen flex justify-center items-center'>
