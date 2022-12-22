@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import toast from 'react-hot-toast';
 import Editor from '../components/Editor';
-import axios from 'axios';
-import Problems from '../components/Problems';
 import Terminal from '../components/Terminal';
 import Runbar from '../components/Runbar';
+import axios from 'axios';
 
-
-const Home = ({ user}) => {
+const CompilerPage = ({}) => {
     const [output, setoutput] = useState({});
     const [code, setcode] = useState('');
     const [input, setinput] = useState('');
@@ -16,7 +13,6 @@ const Home = ({ user}) => {
     function getCode(res) {
         setcode(res)
     }
-
 
     async function submitcode() {
 
@@ -58,39 +54,24 @@ const Home = ({ user}) => {
         }, 1500);
 
     }
-
-
     function getInput(e) {
         e.preventDefault()
         setinput(e.target.value)
     }
-
-    useEffect(() => {
-        if (user != null) {
-            toast.success(`Hi ,Thank You For Login`);
-        }
-    }, [user])
-
-
-    
-
-    return (
-        <div >
-            <Runbar run={submitcode} submit={submitcode}/>
-            <div className="flex ">
-                <div className="w-[30%] min-h-[625px] max-h-[624px]">
-                    <Problems />
-                </div>
-                <main role="main" className="w-[60%] min-h-[625px] max-h-[624px]">
+  return (
+    <div>
+            <Runbar run={submitcode} />
+            <div className=" flex min-h-[625px] max-h-[624px]">
+                <main role="main" className="w-[70%] ">
                     <Editor submitcode={getCode} />
                 </main>
-                <div className=" flex flex-col w-[25%] min-h-[625px] max-h-[624px]">
+                <div className=" flex flex-col w-[30%] ">
                     <Terminal getInput={getInput} placeholder={"Input:"} isDisabled={false} />
                     <Terminal output={output} placeholder={"Output:"} isDisabled={true} />
                 </div>
             </div>
         </div>
-    )
+  )
 }
 
-export default Home
+export default CompilerPage

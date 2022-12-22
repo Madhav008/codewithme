@@ -13,6 +13,7 @@ import './app.css'
 import { Toaster } from 'react-hot-toast'
 import InvitePage from "./Pages/InvitePage";
 import QuestionsPage from "./Pages/QuestionsPage";
+import CompilerPage from "./Pages/CompilerPage";
 
 const App = () => {
     // const [user, setUser] = useState(null);
@@ -53,16 +54,17 @@ const App = () => {
                 ></Toaster>
             </div>
             <Router>
-                <div>
-                    <div>
-                        <Routes>
-                            <Route path="/home" element={<Home user={user} />} />
-                            <Route path="/login" element={user ? <Navigate to="/" /> : <MyLogin />} />
-                            <Route path="/logout" element={<MyLogin />} />
-                        </Routes>
-                    </div>
-                    <NavComp user={user}/>
-                </div>
+                <Navbar user={user} />
+
+                <Routes>
+                    <Route path="/home" element={<Home user={user} isIde={true} />} />
+                    <Route path="/login" element={user ? <Navigate to="/" /> : <MyLogin />} />
+                    <Route path="/logout" element={<MyLogin />} />
+                    <Route path="/ide" element={<CompilerPage />} />
+                    <Route path="/invite" element={<InvitePage />} />
+                    <Route exact path="/" element={<QuestionsPage />} />
+                </Routes>
+
             </Router>
         </div>
     )
@@ -71,16 +73,4 @@ const App = () => {
 export default App
 
 
-
-const NavComp = ({ user }) => {
-    return (
-        <div>
-        <Navbar user={user} />
-        <Routes>
-            <Route path="/invite" element={<InvitePage />} />
-            <Route exact path="/" element={<QuestionsPage />} />
-        </Routes>
-    </div>
-    )
-}
 

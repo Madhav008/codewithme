@@ -9,7 +9,7 @@ const Runbar = ({ run, submit }) => {
             <div className="flex-none">
                 <ul className="menu menu-horizontal px-1">
                     <li><button onClick={run} className='btn btn-secondary bg-secondary text-gray-200'>Run</button></li>
-                    <li><button onClick={submit} className='btn btn-secondary bg-secondary text-gray-200 ml-3'>Submit</button></li>
+                    {submit ? <li><button onClick={submit} className='btn btn-secondary bg-secondary text-gray-200 ml-3'>Submit</button></li>:null}
                     <li className='ml-4'><select className="select bg-base-100 w-[150px] ">
                         <option>Java</option>
                         <option>C++</option>
