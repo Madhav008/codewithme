@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import Editor from '../components/Editor';
 import Terminal from '../components/Terminal';
 import Runbar from '../components/Runbar';
 import axios from 'axios';
 
-const CompilerPage = ({}) => {
+const CompilerPage = () => {
     const [output, setoutput] = useState({});
     const [code, setcode] = useState('');
     const [input, setinput] = useState('');
@@ -61,7 +61,7 @@ const CompilerPage = ({}) => {
   return (
     <div>
             <Runbar run={submitcode} />
-            <div className=" flex min-h-[625px] max-h-[624px]">
+            <div className=" flex min-h-[622px] max-h-[622px]">
                 <main role="main" className="w-[70%] ">
                     <Editor submitcode={getCode} />
                 </main>

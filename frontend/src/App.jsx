@@ -7,7 +7,7 @@ import {
 import React from 'react'
 import Home from "./Pages/Home";
 import MyLogin from "./Pages/MyLogin";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Navbar from "./components/Navbar";
 import './app.css'
 import { Toaster } from 'react-hot-toast'
@@ -54,8 +54,8 @@ const App = () => {
                 ></Toaster>
             </div>
             <Router>
-                <Navbar user={user} />
 
+                <Navbar user={user} />
                 <Routes>
                     <Route path="/home" element={<Home user={user} isIde={true} />} />
                     <Route path="/login" element={user ? <Navigate to="/" /> : <MyLogin />} />
