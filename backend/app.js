@@ -44,13 +44,22 @@ app.use(
 // Initialize DB
 require('./initDB')();
 
+
+
 const AuthRoute = require('./Routes/passport');
 app.use('/auth',AuthRoute)
 
 const JudgeRoute = require('./Routes/judge');
-const { realpath } = require('fs');
 app.use('/',JudgeRoute);
 
+const Problems = require('./Routes/problems');
+app.use('/problems',Problems);
+
+const SubmissionRoute = require('./Routes/submission')
+app.use('/result',SubmissionRoute);
+
+const SeederRoute = require('./seeder')
+app.use('/seeder',SeederRoute);
 
 //Error handler
 app.use((err, req, res, next) => {

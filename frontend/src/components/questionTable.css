@@ -1,0 +1,17 @@
+
+.questionTable{
+    height: 800px;
+    overflow-y: scroll;
+}
+tbody >tr> th{
+    display:inline-block;
+    width:500px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+}
+
+td {
+  text-align: center;
+}

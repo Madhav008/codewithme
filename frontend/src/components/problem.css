@@ -1,0 +1,26 @@
+pre{
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    white-space: break-spaces;
+    display: block;
+    margin: 1em 0px;
+    word-spacing: 4px;
+}
+pre>span{
+    display: block;
+}
+p{
+    font-family: urw-din!important;
+    font-size: 17px!important;
+    line-height: 1.7em;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px
+}
+.problems{
+    display: block;
+
+}

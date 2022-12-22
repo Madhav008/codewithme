@@ -8,8 +8,7 @@ import 'codemirror/addon/edit/closebrackets';
 import 'codemirror/theme/dracula.css';
 import Codemirror from 'codemirror';
 
-const initialcode = `
-public class Main
+const initialcode = `public class Main
 {
 	public static void main(String[] args) {
 		System.out.println("Hello World");
@@ -21,10 +20,7 @@ const Editor = ({ submitcode }) => {
     const [code, setcode] = useState(initialcode)
 
     useEffect(() => {
-
         function init() {
-
-
             editorRef.current = Codemirror.fromTextArea(
                 document.getElementById('realtimeEditor'),
                 {
@@ -54,9 +50,7 @@ const Editor = ({ submitcode }) => {
 
 
     return (
-
         <textarea id="realtimeEditor"></textarea>
-
     );
 
 

@@ -11,7 +11,7 @@ async function getSubmission(token) {
         params: {base64_encoded: 'true', fields: '*'},
     };
 
-    axios(options,)
+    axios(options)
         .then(response => response.json())
         .then(response => {
             console.log(response)
