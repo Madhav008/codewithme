@@ -3,7 +3,7 @@ import './problem.css'
 const Problems = () => {
    
     return (
-        <div className='problems p-3 overflow-scroll text-white h-[100%] max-h-[100%]'>
+        <div className='problems p-3 overflow-y-scroll text-white h-[100%]'>
             <p className=''><span >Given </span> 
                 <span >a Integer</span>
                 <span > array A[] of n elements. Your task is to complete the function </span>

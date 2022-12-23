@@ -81,21 +81,21 @@ const Home = ({ user }) => {
     return (
         <div >
             <Runbar run={submitcode} submit={submitcode} chatbox={openChatBox}/>
-            <div className="flex ">
-                <div className="w-[30%]  h-[90vh]">
+            <div className="flex h-[80vh]">
+                <div className="w-[30%]  h-[82vh]">
                     <Problems />
                 </div>
-                <main role="main" className="w-[60%] h-[90vh]">
+                <main role="main" className="w-[60%] h-[82vh]">
                     <Editor submitcode={getCode} />
                 </main>
-                <div className='relative w-[25%] h-[90vh] '>
+                <div className='relative w-[25%] h-[82vh] '>
                     <div className={hidden?'hidden absolute h-[100%] w-[100%]':'visible absolute h-[100%] w-[100%]'}>
                         <div className="flex flex-col h-[100%]">
                             <Terminal getInput={getInput} placeholder={"Input:"} isDisabled={false} />
                             <Terminal output={output} placeholder={"Output:"} isDisabled={true} />
                         </div>
                     </div>
-                    <div className={hidden?'visible absolute h-[90vh] w-[100%]':'hidden absolute h-[90vh] w-[100%]'}>
+                    <div className={hidden?'visible absolute h-[82vh] w-[100%]':'hidden absolute h-[82vh] w-[100%]'}>
                         <ChatComponent />
                     </div>
                 </div>
