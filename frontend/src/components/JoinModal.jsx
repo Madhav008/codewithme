@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-
+import Multiselect from './Multiselect'
 const JoinModal = () => {
     const [min, setmin] = useState(0)
-
+    const [visible, setvisible] = useState(false)
     function setValue() {
-       
+
         if (min < 105) {
             setmin(min + 15);
         }
@@ -26,35 +26,37 @@ const JoinModal = () => {
             <div className="modal modal-bottom sm:modal-middle">
                 <div className="modal-box">
                     <h3 className="font-bold text-lg">Create The Room</h3>
-                    <div className="form-control w-full max-w-xs">
-                        <label className="label">
-                            <span className="label-text">Pick the company</span>
-                        </label>
-                        <select className="select select-bordered">
-                            <option>Star Wars</option>
-                            <option>Harry Potter</option>
-                            <option>Lord of the Rings</option>
-                            <option>Planet of the Apes</option>
-                            <option>Star Trek</option>
-                        </select>
+                    <div className="form-control w-full">
+                        <p>Select The Companies</p>
+                        <Multiselect />
                     </div>
-                    <div className="form-control w-full max-w-xs">
-                        <label className="label">
-                            <span className="label-text">Pick the topic</span>
-                        </label>
-                        <select className="select select-bordered">
-                            <option value="apple">Apple</option>
-                            <option value="banana" selected>Banana</option>
-                            <option value="orange" selected>Orange</option>
-                            <option value="grape">Grape</option>
-                        </select>
+                    <div >
+                        <p>Select the Topics</p>
+                        <Multiselect />
                     </div>
+                    <div >
+                        <p>Select the Difficulty</p>
+                        <div className="form-control">
+                            <label className="cursor-pointer label">
+                                <span className="label-text">Easy</span>
+                                <input type="checkbox"  className="checkbox checkbox-info" />
+                            </label>
+                            <label className="cursor-pointer label">
+                                <span className="label-text">Medium</span>
+                                <input type="checkbox"  className="checkbox checkbox-info" />
+                            </label><label className="cursor-pointer label">
+                                <span className="label-text">Hard</span>
+                                <input type="checkbox"  className="checkbox checkbox-info" />
+                            </label>
+                        </div>
+                    </div>
+
 
                     <div className="grid grid-flow-col gap-5 text-center auto-cols-max mt-2 ">
                         <p>Select the time</p>
                         <div className="flex gap-1">
                             <span className="countdown font-mono text-2xl">
-                                <span style={{ "--value": (min<0)?0:(min>99)?99:min }}></span>
+                                <span style={{ "--value": (min < 0) ? 0 : (min > 99) ? 99 : min }}></span>
                             </span>
                             min
                         </div>
