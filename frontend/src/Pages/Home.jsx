@@ -5,9 +5,10 @@ import axios from 'axios';
 import Problems from '../components/Problems';
 import Terminal from '../components/Terminal';
 import Runbar from '../components/Runbar';
+import ChatComponent from '../components/ChatComponent';
 
 
-const Home = ({ user}) => {
+const Home = ({ user }) => {
     const [output, setoutput] = useState({});
     const [code, setcode] = useState('');
     const [input, setinput] = useState('');
@@ -27,7 +28,7 @@ const Home = ({ user}) => {
                 'content-type': 'application/json',
                 'Content-Type': 'application/json',
             },
-            data: { "language_id": "62", "source_code": code, "stdin":input }
+            data: { "language_id": "62", "source_code": code, "stdin": input }
         };
 
         const response = await axios.request(options)
@@ -71,22 +72,32 @@ const Home = ({ user}) => {
         }
     }, [user])
 
+    const [hidden, sethidden] = useState(false);
 
-    
+    function openChatBox(){
+        sethidden(!hidden);
+    }
 
     return (
         <div >
-            <Runbar run={submitcode} submit={submitcode}/>
+            <Runbar run={submitcode} submit={submitcode} chatbox={openChatBox}/>
             <div className="flex ">
-                <div className="w-[30%] min-h-[625px] max-h-[624px]">
+                <div className="w-[30%]  h-[90vh]">
                     <Problems />
                 </div>
-                <main role="main" className="w-[60%] min-h-[625px] max-h-[624px]">
+                <main role="main" className="w-[60%] h-[90vh]">
                     <Editor submitcode={getCode} />
                 </main>
-                <div className=" flex flex-col w-[25%] min-h-[625px] max-h-[624px]">
-                    <Terminal getInput={getInput} placeholder={"Input:"} isDisabled={false} />
-                    <Terminal output={output} placeholder={"Output:"} isDisabled={true} />
+                <div className='relative w-[25%] h-[90vh] '>
+                    <div className={hidden?'hidden absolute h-[100%] w-[100%]':'visible absolute h-[100%] w-[100%]'}>
+                        <div className="flex flex-col h-[100%]">
+                            <Terminal getInput={getInput} placeholder={"Input:"} isDisabled={false} />
+                            <Terminal output={output} placeholder={"Output:"} isDisabled={true} />
+                        </div>
+                    </div>
+                    <div className={hidden?'visible absolute h-[90vh] w-[100%]':'hidden absolute h-[90vh] w-[100%]'}>
+                        <ChatComponent />
+                    </div>
                 </div>
             </div>
         </div>

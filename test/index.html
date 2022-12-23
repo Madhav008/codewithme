@@ -1,12 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css" rel="stylesheet">
     <title>Document</title>
+
+    <link rel="stylesheet" href="index.css">
 </head>
+
 <body>
-    <script src="./index.js"></script>
+    <!-- The top div has the visible class applied to it by default, which shows it -->
+    <div class="h-[200px] w-[200px] bg-blue flex justify-between">
+        <div id="top" class="relative visible">
+            <div class="absolute top-0 left-0">
+                <!-- This div will be positioned over the other div -->
+    
+                <div>
+                    <h1>Top Div</h1>
+                </div>
+            </div>
+        </div>
+    
+        <!-- The bottom div has the hidden class applied to it by default, which hides it -->
+        <div id="bottom" class="relative hidden">
+            <div class="absolute top-0 left-0">
+                <!-- This div will be positioned under the top div -->
+                <div>
+                    <h1>Bottom Div</h1>
+                </div>
+            </div>
+        </div>
+
+        <button class="absolute left top-20" 
+        onclick="document.getElementById('top').classList.toggle('hidden'); document.getElementById('bottom').classList.toggle('visible')
+            document.getElementById('bottom').classList.remove('hidden'); document.getElementById('top').classList.remove('visible')
+        ">
+        Show/Hide Overlay
+    </button>
+    </div>
+
+    <!-- The button will toggle the visible/hidden class on the top/bottom div when clicked -->
+   
+
+
 </body>
+
 </html>

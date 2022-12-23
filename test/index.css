@@ -1,0 +1,9 @@
+.top {
+    position: absolute;
+    z-index: 2;
+}
+
+.bottom {
+    position: relative;
+    z-index: 1;
+}

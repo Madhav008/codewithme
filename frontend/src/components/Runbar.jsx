@@ -1,6 +1,6 @@
 import React from 'react'
 import Timer from './Timer'
-const Runbar = ({ run, submit }) => {
+const Runbar = ({ run, submit, chatbox }) => {
     return (
         <div className="navbar bg-[#020a07]">
             <div className="flex-1">
@@ -8,19 +8,23 @@ const Runbar = ({ run, submit }) => {
             </div>
             <div className="flex-none ">
                 <ul className="menu menu-horizontal px-1">
-                   
+
                     <li>
-                        <Timer/>
+                        <Timer />
                     </li>
                     <li><button onClick={run} className='btn btn-secondary bg-secondary text-gray-200'>Run</button></li>
                     {submit ? <li><button onClick={submit} className='btn btn-secondary bg-secondary text-gray-200 ml-3'>Submit</button></li> : null}
-                   
+
                     <li className='ml-4'><select className="select bg-base-100 w-[150px] ">
                         <option>Java</option>
                         <option>C++</option>
                     </select>
                     </li>
-                    
+
+                    {chatbox ? <li>
+                        <div className='ml-2 bg-info text-white' onClick={chatbox}> Chatbox</div>
+                    </li> : null}
+
                     {/* <li tabIndex={0}>
                         <a>
                             Parent
