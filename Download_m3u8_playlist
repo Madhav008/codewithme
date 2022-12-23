@@ -1,9 +1,0 @@
-ffmpeg -i "http://example.com/chunklist.m3u8" -codec copy file.mp4
-
-adb shell screenrecord --help
-
-To record the screen
-adb shell screenrecord /sdcard/example.mp4
-
-To take screenshot
-screencap -p /sdcard/example.png
