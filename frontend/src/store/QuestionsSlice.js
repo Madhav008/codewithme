@@ -13,7 +13,9 @@ const questionSlice = createSlice({
         status: STATUSES.IDLE,
         page:1,
         difficulty: 'Easy',
-        query:''
+        query:'',
+        company:'',
+        topic:''
     },
     reducers: {
         setquestions(state, action) {
@@ -31,6 +33,12 @@ const questionSlice = createSlice({
         setQuerys(state, action) {
             state.query = action.payload;
         },
+        setCompany(state, action) {
+            state.company = action.payload;
+        },
+        setTopic(state, action) {
+            state.topic = action.payload;
+        },
         clearData(state, action) {
             state.data = [];
         }
@@ -38,7 +46,7 @@ const questionSlice = createSlice({
 
 });
 
-export const { setquestions, setStatus,setPage,setDifficulty,setQuerys,clearData } = questionSlice.actions;
+export const { setquestions, setStatus,setPage,setDifficulty,setQuerys,setCompany,setTopic,clearData } = questionSlice.actions;
 export default questionSlice.reducer;
 
 // Thunks
@@ -85,6 +93,59 @@ export function searchQuestions() {
             });
             const data = await res.json();
             // dispatch(clearData())
+            dispatch(setquestions(data));
+            dispatch(setStatus(STATUSES.IDLE));
+        } catch (err) {
+            console.log(err);
+            dispatch(setStatus(STATUSES.ERROR));
+        }
+    };
+}
+
+//Fetch Question by companyname
+export function searchQuestionsbycompanyname() {
+    return async function fetchquestionThunk(dispatch, getState) {
+        dispatch(setStatus(STATUSES.LOADING));
+        try {
+            var pageno = getState().questions.page 
+            var query = getState().questions.company;
+            const res = await fetch(`${process.env.REACT_APP_Backend_URL}/problems/company/${query}/?page=${pageno}`, {
+                method: "GET",
+                credentials: "include",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Credentials": true,
+                },
+            });
+            const data = await res.json();
+            // dispatch(clearData())
+            dispatch(setquestions(data));
+            dispatch(setStatus(STATUSES.IDLE));
+        } catch (err) {
+            console.log(err);
+            dispatch(setStatus(STATUSES.ERROR));
+        }
+    };
+}
+
+
+//Fetch Question by Topics
+export function searchQuestionsbyTopics() {
+    return async function fetchquestionThunk(dispatch, getState) {
+        dispatch(setStatus(STATUSES.LOADING));
+        try {
+            var pageno = getState().questions.page 
+            var query = getState().questions.topic;
+            
+            const res = await fetch(`${process.env.REACT_APP_Backend_URL}/problems/topic/?page=${pageno}`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({name:query})
+            });
+            const data = await res.json();
             dispatch(setquestions(data));
             dispatch(setStatus(STATUSES.IDLE));
         } catch (err) {

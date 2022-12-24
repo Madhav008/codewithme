@@ -23,7 +23,6 @@ const QuestionsPage = () => {
 
     useEffect(() => {
         dispatch(fetchquestions())
-        
     }, [])
 
     useEffect(() => {

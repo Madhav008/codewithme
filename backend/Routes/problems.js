@@ -147,12 +147,18 @@ router.get('/company/:name', async function (req, res) {
     }
 });
 
-router.get('/topic/:name', async function (req, res) {
+router.post('/topic', async function (req, res) {
+    const page = parseInt(req.query.page) || 1;
+    const skip = (page - 1) * pageSize;
+
+    const {name} = req.body;
     try {
-        const questions = await Questions.find({ topics_tags: req.params.name }).select('-url').skip(skip).limit(pageSize);
+        const questions = await Questions.find({ topics_tags: name }).select('-url').skip(skip).limit(pageSize);
         res.status(200).send(questions);
     } catch (error) {
         res.status(500).send(error.message);
     }
 });
+
+
 module.exports = router;

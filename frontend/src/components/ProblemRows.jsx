@@ -22,6 +22,9 @@ const ProblemRows = () => {
                     <th scope="row" className="py-4 px-6 font-medium text-gray-900 dark:text-white " >
                        <Link to={`/problem/${question.id}`}> {question.name}</Link>
                     </th>
+                    {question.difficulty === 'Basic' ? <td className="py-4 px-6">
+                        <div className="badge badge-success max-w-sm m-auto font-bold text-gray-50">{question.difficulty}</div>
+                    </td> : null}
                     {question.difficulty === 'Easy' ? <td className="py-4 px-6">
                         <div className="badge badge-primary max-w-sm m-auto font-bold text-gray-50">{question.difficulty}</div>
                     </td> : null}
