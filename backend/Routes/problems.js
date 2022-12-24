@@ -53,6 +53,9 @@ router.get('/difficulty/:difficulty', async function (req, res) {
 });
 
 
+
+
+
 router.get('/search/:query', async function (req, res) {
     try {
         const page = parseInt(req.query.page) || 1;
@@ -64,5 +67,29 @@ router.get('/search/:query', async function (req, res) {
     }
 });
 
-// { $regex: new RegExp(query) } 
+
+
+
+router.get('/company/:name', async function (req, res) {
+    try {
+        const questions = await Questions.find({ company_tags: req.params.name });
+        res.status(200).send(questions);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}
+);
+
+
+router.get('/sort', async function (req, res) {
+    try {
+        const questions = await Questions.find()
+        res.status(200).send(questions);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+}
+);
+
+
 module.exports = router;

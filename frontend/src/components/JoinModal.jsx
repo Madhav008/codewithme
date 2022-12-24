@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import Multiselect from './Multiselect'
 const JoinModal = () => {
     const [min, setmin] = useState(0)
-    const [visible, setvisible] = useState(false)
     function setValue() {
 
         if (min < 105) {

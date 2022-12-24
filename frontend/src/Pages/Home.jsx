@@ -66,12 +66,7 @@ const Home = ({ user }) => {
         setinput(e.target.value)
     }
 
-    useEffect(() => {
-        if (user != null) {
-            toast.success(`Hi ,Thank You For Login`);
-        }
-    }, [user])
-
+  
     const [hidden, sethidden] = useState(false);
 
     function openChatBox(){

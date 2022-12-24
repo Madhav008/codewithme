@@ -4,7 +4,7 @@ import {
     Routes,
     Route, Navigate
 } from "react-router-dom";
-import React from 'react'
+import React,{useState} from 'react'
 import Home from "./Pages/Home";
 import MyLogin from "./Pages/MyLogin";
 import { useEffect } from "react";
@@ -16,36 +16,33 @@ import QuestionsPage from "./Pages/QuestionsPage";
 import CompilerPage from "./Pages/CompilerPage";
 
 const App = () => {
-    // const [user, setUser] = useState(null);
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
-        // const getUser = () => {
-        //     fetch("http://192.168.1.123:5000/auth/login/success", {
-        //         method: "GET",
-        //         credentials: "include",
-        //         headers: {
-        //             Accept: "application/json",
-        //             "Content-Type": "application/json",
-        //             "Access-Control-Allow-Credentials": true,
-        //         },
-        //     })
-        //         .then((response) => {
-        //             if (response.status === 200) return response.json();
-        //             throw new Error("authentication has been failed!");
-        //         })
-        //         .then((resObject) => {
-        //             setUser(resObject.user);
-        //         })
-        //         .catch((err) => {
-        //             console.log(err);
-        //         });
-        // };
-        // getUser();
+        const getUser = () => {
+            fetch(`${process.env.REACT_APP_Backend_URL}/auth/login/success`, {
+                method: "GET",
+                credentials: "include",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Credentials": true,
+                },
+            })
+                .then((response) => {
+                    if (response.status === 200) return response.json();
+                    throw new Error("authentication has been failed!");
+                })
+                .then((resObject) => {
+                    setUser(resObject.user);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        };
+        getUser();
     }, []);
-    const user = {
-        displayName: 'Madhav',
-
-    }
+    
     return (
         <div >
             <div>
@@ -57,7 +54,7 @@ const App = () => {
 
                 <Navbar user={user} />
                 <Routes>
-                    <Route path="/home" element={<Home user={user} isIde={true} />} />
+                    <Route path="/problem/:pid" element={<Home user={user}  />} />
                     <Route path="/login" element={user ? <Navigate to="/" /> : <MyLogin />} />
                     <Route path="/logout" element={<MyLogin />} />
                     <Route path="/ide" element={<CompilerPage />} />

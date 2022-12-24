@@ -1,9 +1,34 @@
-import React from 'react'
+import React ,{useEffect}from 'react'
 import QuestionPageRightSide from '../components/QuestionPageRightSide'
 import QuestionTable from '../components/QuestionTable'
 import SearchBar from '../components/SearchBar'
+import { useSelector, useDispatch } from 'react-redux'
+import { setPage } from '../store/QuestionsSlice'
+import { fetchquestions } from '../store/QuestionsSlice';
+
 
 const QuestionsPage = () => {
+    const { page } = useSelector((state) => state.questions)
+    const dispatch = useDispatch();
+    function nextPage() {
+        dispatch(setPage(page + 1));
+    }
+
+    function previousPage() {
+        if (page > 0) {
+            dispatch(setPage(page - 1));
+        }
+    }
+
+    useEffect(() => {
+        dispatch(fetchquestions())
+    }, [page])
+
+    /* useEffect(() => {
+        if (user != null) {
+            toast.success(`Hi ,Thank You For Login`);
+        }
+    }, [user]) */
 
     return (
         <div className='h-[100%]'>
@@ -20,8 +45,8 @@ const QuestionsPage = () => {
                     <div className="h-[10px] m-0 divider"></div>
                     <QuestionTable />
                     <div className="btn-group grid grid-cols-2 m-auto max-w-lg">
-                        <button className="btn btn-outline">Previous page</button>
-                        <button className="btn btn-outline">Next</button>
+                        <button onClick={previousPage} className="btn btn-outline">Previous page</button>
+                        <button onClick={nextPage} className="btn btn-outline">Next</button>
                     </div>
                 </div>
                 <div className='flex flex-col w-[30%] h-[100%]'>

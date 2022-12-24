@@ -7,6 +7,7 @@ import 'codemirror/addon/edit/closetag';
 import 'codemirror/addon/edit/closebrackets';
 import 'codemirror/theme/dracula.css';
 import Codemirror from 'codemirror';
+import { useSelector } from 'react-redux'
 
 const initialcode = `public class Main
 {
@@ -15,12 +16,16 @@ const initialcode = `public class Main
 	}
 }
 `
-const Editor = ({ submitcode }) => {
+const Editor = ({ submitcode ,isIde}) => {
+    const { data: question } = useSelector((state) => state.problemMeta)
+    
     const editorRef = useRef(null)
     const [code, setcode] = useState(initialcode)
 
+
     useEffect(() => {
         function init() {
+            
             editorRef.current = Codemirror.fromTextArea(
                 document.getElementById('realtimeEditor'),
                 {
@@ -33,8 +38,11 @@ const Editor = ({ submitcode }) => {
                     lineWrapping: true
                 }
             );
-
-            editorRef.current.setValue(code)
+            if(isIde){
+                editorRef.current.setValue(code)
+            }else{
+                editorRef.current.setValue(code)
+            }
             submitcode(editorRef.current.getValue())
             //Use For Realtime changes
             editorRef.current.on('change', (instance, changes) => {
@@ -42,9 +50,8 @@ const Editor = ({ submitcode }) => {
                 submitcode(editorRef.current.getValue())
             })
         }
-        init()
-
-    }, [])
+            init()
+    },[])
 
     
 

@@ -63,7 +63,7 @@ const CompilerPage = () => {
             <Runbar run={submitcode} />
             <div className=" flex min-h-[622px] max-h-[622px]">
                 <main role="main" className="w-[70%] ">
-                    <Editor submitcode={getCode} />
+                    <Editor submitcode={getCode} isIde={true}/>
                 </main>
                 <div className=" flex flex-col w-[30%] ">
                     <Terminal getInput={getInput} placeholder={"Input:"} isDisabled={false} />

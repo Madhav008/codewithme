@@ -3,18 +3,18 @@ import ProblemRows from './ProblemRows'
 import './questionTable.css'
 
 const QuestionTable = () => {
-
-
+    
     return (
         <div className="questionTable">
-            <div class="relative shadow-md sm:rounded-lg">
-                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 overflow-auto">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <div className="relative shadow-md sm:rounded-lg">
+                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 overflow-auto">
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" class="py-3 px-6">
+                            <th></th>
+                            <th scope="col" className="py-3 px-6">
                                 Problems
                             </th>
-                            <th scope="col" class="py-3 px-6">
+                            <th scope="col" className="py-3 px-6">
                                 <select className="select select-bordered select-sm max-w-xs">
                                     <option disabled selected>DIFFICULTY</option>
                                     <option>EASY</option>
@@ -26,10 +26,6 @@ const QuestionTable = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <ProblemRows />
-                        <ProblemRows />
-                        <ProblemRows />
-                        <ProblemRows />
                         <ProblemRows />
 
                     </tbody>
