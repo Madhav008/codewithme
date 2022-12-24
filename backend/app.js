@@ -45,6 +45,7 @@ app.use(
 require('./initDB')();
 
 
+
 const AuthRoute = require('./Routes/passport');
 app.use('/auth',AuthRoute)
 
@@ -59,6 +60,10 @@ app.use('/result',SubmissionRoute);
 
 const MetaRoute = require('./Routes/problem_meta')
 app.use('/info',MetaRoute);
+
+const ComapanyRoute = require('./Routes/compSeeder'); 
+ app.use('/companyseed',ComapanyRoute);
+
 
 // const SeederRoute = require('./seeder')
 // app.use('/seeder',SeederRoute);

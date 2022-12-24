@@ -41,7 +41,7 @@ const Editor = ({ submitcode ,isIde}) => {
             if(isIde){
                 editorRef.current.setValue(code)
             }else{
-                editorRef.current.setValue(code)
+                editorRef.current.setValue(question.java)
             }
             submitcode(editorRef.current.getValue())
             //Use For Realtime changes

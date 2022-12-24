@@ -17,13 +17,14 @@ router.get('/:pid', async function (req, res) {
         res.status(500).send(error.message)
     }
 });
-router.get('/:slug', async function (req, res) {
+
+router.get('/slug/:slug', async function (req, res) {
     try {
         console.log(req.params.slug);
         const metaInfo = await MetaInfo.find({ slug: req.params.slug })
-        // res.status(200).send(metaInfo);
+        res.status(200).send(metaInfo[0]);
     } catch (error) {
-        // res.status(500).send(error.message)
+        res.status(500).send(error.message)
     }
 });
 

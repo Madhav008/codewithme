@@ -4,6 +4,20 @@ const Questions = require('../Models/Questions')
 
 
 const pageSize = 20;
+
+router.get('/sort', async function (req, res) {
+    try {
+        const page = parseInt(req.query.page) || 1;
+        const skip = (page - 1) * pageSize;
+        const questions = await Questions.find().select('id company_tags').skip(skip).limit(pageSize);;
+        res.status(200).send(questions);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
+
+
 //Get All the questions
 router.get('/', async function (req, res) {
     try {
@@ -77,19 +91,7 @@ router.get('/company/:name', async function (req, res) {
     } catch (error) {
         res.status(500).send(error.message);
     }
-}
-);
-
-
-router.get('/sort', async function (req, res) {
-    try {
-        const questions = await Questions.find()
-        res.status(200).send(questions);
-    } catch (error) {
-        res.status(500).send(error.message);
-    }
-}
-);
+});
 
 
 module.exports = router;
