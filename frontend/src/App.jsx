@@ -14,6 +14,7 @@ import { Toaster } from 'react-hot-toast'
 import InvitePage from "./Pages/InvitePage";
 import QuestionsPage from "./Pages/QuestionsPage";
 import CompilerPage from "./Pages/CompilerPage";
+import AceEditors from "./components/AceEditor"
 
 const App = () => {
     const [user, setUser] = useState(null);
@@ -59,7 +60,10 @@ const App = () => {
                     <Route path="/logout" element={<MyLogin />} />
                     <Route path="/ide" element={<CompilerPage />} />
                     <Route path="/invite" element={<InvitePage />} />
+                    <Route path="/ace" element={<AceEditors />} />
+
                     <Route exact path="/" element={<QuestionsPage />} />
+
                 </Routes>
 
             </Router>

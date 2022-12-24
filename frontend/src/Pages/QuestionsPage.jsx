@@ -5,7 +5,8 @@ import SearchBar from '../components/SearchBar'
 import { useSelector, useDispatch } from 'react-redux'
 import { setPage } from '../store/QuestionsSlice'
 import { fetchquestions } from '../store/QuestionsSlice';
-
+import {fetchcompany} from '../store/companiesSlice';
+import { fetchtopic } from '../store/topicsSlice'
 
 const QuestionsPage = () => {
     const { page } = useSelector((state) => state.questions)
@@ -22,8 +23,13 @@ const QuestionsPage = () => {
 
     useEffect(() => {
         dispatch(fetchquestions())
-    }, [page])
+        
+    }, [])
 
+    useEffect(() => {
+        dispatch(fetchcompany())
+        dispatch(fetchtopic())
+    },[])
     /* useEffect(() => {
         if (user != null) {
             toast.success(`Hi ,Thank You For Login`);
