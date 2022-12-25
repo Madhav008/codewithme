@@ -43,7 +43,7 @@ const CompilerPage = () => {
         const res = await axios.request(options);
 
         if (res.data.status.id >= 3) {
-            setoutput(res.data)
+            setoutput(res)
             console.log(res.data)
             return
         }
