@@ -1,13 +1,15 @@
-import { configureStore } from '@reduxjs/toolkit'
-import questionsReducer from './QuestionsSlice'
-import problemMetaReducer from './ProblemMetaSlice'
-import companiesReducer from './companiesSlice'
-import topicsReducer from './topicsSlice'
+import { configureStore } from "@reduxjs/toolkit";
+import questionsReducer from "./QuestionsSlice";
+import problemMetaReducer from "./ProblemMetaSlice";
+import companiesReducer from "./companiesSlice";
+import topicsReducer from "./topicsSlice";
+import userCodeReducer from "./userCodeSlice";
 export const store = configureStore({
   reducer: {
-    questions:questionsReducer,
+    questions: questionsReducer,
     problemMeta: problemMetaReducer,
-    companies:companiesReducer,
-    topics:topicsReducer,
+    companies: companiesReducer,
+    topics: topicsReducer,
+    usercode: userCodeReducer,
   },
-})
+});

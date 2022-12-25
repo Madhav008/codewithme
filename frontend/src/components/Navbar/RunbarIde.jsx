@@ -1,10 +1,13 @@
 import React from 'react'
-import Timer from './Timer'
-const Runbar = ({ run, submit, chatbox }) => {
+import Timer from '../Timer/Timer'
+
+
+const RunbarIde = ({run} ) => {
+  
     return (
         <div className="navbar bg-[#020a07]">
             <div className="flex-1">
-                <div className="btn btn-ghost normal-case text-xl">RoomName</div>
+                <div className="btn btn-ghost normal-case text-xl">Online Ide</div>
             </div>
             <div className="flex-none ">
                 <ul className="menu menu-horizontal px-1">
@@ -13,18 +16,13 @@ const Runbar = ({ run, submit, chatbox }) => {
                         <Timer />
                     </li>
                     <li><button onClick={run} className='btn btn-secondary bg-secondary text-gray-200'>Run</button></li>
-                    {submit ? <li><button onClick={submit} className='btn btn-secondary bg-secondary text-gray-200 ml-3'>Submit</button></li> : null}
-
                     <li className='ml-4'><select className="select bg-base-100 w-[150px] ">
                         <option>Java</option>
                         <option>C++</option>
                     </select>
                     </li>
 
-                    {chatbox ? <li>
-                        <div className='ml-2 bg-info text-white' onClick={chatbox}> Chatbox</div>
-                    </li> : null}
-
+                  
                     {/* <li tabIndex={0}>
                         <a>
                             Parent
@@ -42,4 +40,4 @@ const Runbar = ({ run, submit, chatbox }) => {
     )
 }
 
-export default Runbar
+export default RunbarIde

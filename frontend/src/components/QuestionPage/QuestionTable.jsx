@@ -1,5 +1,5 @@
 import React from 'react'
-import ProblemRows from './ProblemRows'
+import ProblemRows from '../Problems/ProblemRows'
 import './questionTable.css'
 
 const QuestionTable = () => {

@@ -2,57 +2,22 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Editor from "../components/Editor";
 import axios from "axios";
-import Problems from "../components/Problems";
-import Terminal from "../components/Terminal";
-import Runbar from "../components/Runbar";
-import ChatComponent from "../components/ChatComponent";
-import AceEditors from "../components/AceEditor";
+import Problems from "../components/Problems/Problems";
+import Terminal from "../components/Terminals/Terminal";
+import Runbar from "../components/Navbar/Runbar";
+import ChatComponent from "../components/Chat/ChatComponent";
+import AceEditors from "../components/Ace/AceEditor";
+import InputTerminal from "../components/Terminals/InputTerminal";
+import { useDispatch,useSelector } from 'react-redux'
+import {submitProblem,setsubmitData} from '../store/ProblemMetaSlice';
 
-const Home = ({ user }) => {
+const Home = () => {
   const [output, setoutput] = useState({});
-  const [code, setcode] = useState("");
   const [input, setinput] = useState("");
+  const { data, status,submitData } = useSelector((state) => state.problemMeta)
 
-  function getCode(res) {
-    setcode(res);
-  }
 
-  async function submitcode() {
-    const options = {
-      method: "POST",
-      url: `http://192.168.1.124:2358/submissions`,
-      headers: {
-        "content-type": "application/json",
-        "Content-Type": "application/json",
-      },
-      data: { language_id: "62", source_code: code, stdin: input },
-    };
 
-    const response = await axios.request(options);
-
-    fetchSubmission(response.data.token);
-  }
-
-  async function fetchSubmission(token) {
-    const options = {
-      method: "GET",
-      url: `http://192.168.1.124:2358/submissions/${token}`,
-    };
-
-    const res = await axios.request(options);
-
-    if (res.data.status.id >= 3) {
-      setoutput(res.data);
-      console.log(res.data);
-      return;
-    }
-    console.log(res.data);
-    setoutput(res.data);
-
-    setTimeout(async () => {
-      fetchSubmission(token);
-    }, 1500);
-  }
 
   function getInput(e) {
     e.preventDefault();
@@ -67,14 +32,14 @@ const Home = ({ user }) => {
 
   return (
     <div>
-      <Runbar run={submitcode} submit={submitcode} chatbox={openChatBox} />
+      <Runbar chatbox={openChatBox} />
       <div className="flex h-[80vh]">
         <div className="w-[30%]  h-[82vh]">
           <Problems />
         </div>
         <main role="main" className="w-[60%] h-[82vh]">
           {/* <Editor submitcode={getCode} /> */}
-          <AceEditors submitcode={getCode}/>
+          <AceEditors />
         </main>
         <div className="relative w-[25%] h-[82vh] ">
           <div
@@ -85,16 +50,8 @@ const Home = ({ user }) => {
             }
           >
             <div className="flex flex-col h-[100%]">
-              <Terminal
-                getInput={getInput}
-                placeholder={"Input:"}
-                isDisabled={false}
-              />
-              <Terminal
-                output={output}
-                placeholder={"Output:"}
-                isDisabled={true}
-              />
+              <InputTerminal getInput={getInput} placeholder={"Input:"} />
+              <Terminal output={output} placeholder={"Output:"} />
             </div>
           </div>
           <div

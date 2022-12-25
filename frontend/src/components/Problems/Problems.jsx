@@ -1,7 +1,7 @@
 import React from 'react'
 import './problem.css'
-import { fetchproblemMetas, setPid } from '../store/ProblemMetaSlice';
-import {STATUSES} from '../store/ProblemMetaSlice';
+import { fetchproblemMetas, setPid } from '../../store/ProblemMetaSlice';
+import {STATUSES} from '../../store/ProblemMetaSlice';
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';

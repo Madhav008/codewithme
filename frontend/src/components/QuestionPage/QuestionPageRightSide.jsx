@@ -1,8 +1,8 @@
 import React from "react";
-import Room from "../components/Room";
-import JoinModal from "./JoinModal";
-import CompaniesComponent from "../components/CompaniesComponent";
-import TopicsTag from "./TopicsTag";
+import Room from "../Room/Room";
+import JoinModal from "../Modal/JoinModal";
+import CompaniesComponent from "../Companies/CompaniesComponent";
+import TopicsTag from "../Topics/TopicsTag";
 
 const QuestionPageRightSide = () => {
   return (

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Multiselect from './Multiselect'
+import Multiselect from '../MultiSelectComp/Multiselect'
 const JoinModal = () => {
     const [min, setmin] = useState(0)
     function setValue() {

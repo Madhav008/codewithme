@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import {STATUSES} from '../store/QuestionsSlice';
+import {STATUSES} from '../../store/QuestionsSlice';
 import { Link } from 'react-router-dom';
 
 const ProblemRows = () => {
@@ -13,8 +13,6 @@ const ProblemRows = () => {
     return (
         <>
             {questions.map((question,index) => (
-
-                
                 <tr key={question.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     <td className='py-4 px-6 font-medium'>
                         {index+1}.

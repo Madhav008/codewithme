@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { searchQuestionsbyTopics, setTopic } from "../store/QuestionsSlice";
-import { STATUSES } from "../store/topicsSlice";
+import { searchQuestionsbyTopics, setTopic } from "../../store/QuestionsSlice";
+import { STATUSES } from "../../store/topicsSlice";
 
 const TopicsTag = () => {
   const { data: topic, status } = useSelector((state) => state.topics);

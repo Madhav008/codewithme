@@ -57,10 +57,8 @@ const Editor = ({ submitcode ,isIde}) => {
 
 
     return (
-        <div>
-            <div className='bg-gray-500'>Navbar</div>
-            <textarea id="realtimeEditor"></textarea>
-        </div>
+
+            <textarea className='h-[100%]' id="realtimeEditor"></textarea>
     );
 
 

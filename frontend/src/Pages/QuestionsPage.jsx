@@ -1,7 +1,7 @@
 import React ,{useEffect}from 'react'
-import QuestionPageRightSide from '../components/QuestionPageRightSide'
-import QuestionTable from '../components/QuestionTable'
-import SearchBar from '../components/SearchBar'
+import QuestionPageRightSide from '../components/QuestionPage/QuestionPageRightSide'
+import QuestionTable from '../components/QuestionPage/QuestionTable'
+import SearchBar from '../components/Search/SearchBar'
 import { useSelector, useDispatch } from 'react-redux'
 import { setPage } from '../store/QuestionsSlice'
 import { fetchquestions } from '../store/QuestionsSlice';

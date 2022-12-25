@@ -1,9 +1,10 @@
 import React, {  useState } from 'react'
-import Editor from '../components/Editor';
-import Terminal from '../components/Terminal';
-import Runbar from '../components/Runbar';
+import Terminal from '../components/Terminals/Terminal';
 import axios from 'axios';
-
+import AceEditor from '../components/Ace/AceEditor'
+import InputTerminal from '../components/Terminals/InputTerminal';
+import RunbarIde from '../components/Navbar/RunbarIde';
+import Editor from '../components/Editor';
 const CompilerPage = () => {
     const [output, setoutput] = useState({});
     const [code, setcode] = useState('');
@@ -60,14 +61,15 @@ const CompilerPage = () => {
     }
   return (
     <div>
-            <Runbar run={submitcode} />
+            <RunbarIde run={submitcode} />
             <div className=" flex min-h-[622px] max-h-[622px]">
-                <main role="main" className="w-[70%] ">
+                <main role="main" className="w-[70%]">
                     <Editor submitcode={getCode} isIde={true}/>
+                    {/* <AceEditor getCode={getCode}/> */}
                 </main>
                 <div className=" flex flex-col w-[30%] ">
-                    <Terminal getInput={getInput} placeholder={"Input:"} isDisabled={false} />
-                    <Terminal output={output} placeholder={"Output:"} isDisabled={true} />
+                    <InputTerminal getInput={getInput} placeholder={"Input:"} />
+                    <Terminal output={output} placeholder={"Output:"} />
                 </div>
             </div>
         </div>

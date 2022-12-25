@@ -19,7 +19,6 @@ async function getallthequestions(page_number) {
 
 
 //get meta information
-// 
 async function getMetainfo(slug) {
     var config = {
         method: 'get',

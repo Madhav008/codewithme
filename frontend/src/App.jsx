@@ -8,13 +8,12 @@ import React,{useState} from 'react'
 import Home from "./Pages/Home";
 import MyLogin from "./Pages/MyLogin";
 import { useEffect } from "react";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 import './app.css'
 import { Toaster } from 'react-hot-toast'
 import InvitePage from "./Pages/InvitePage";
 import QuestionsPage from "./Pages/QuestionsPage";
 import CompilerPage from "./Pages/CompilerPage";
-import AceEditors from "./components/AceEditor"
 
 const App = () => {
     const [user, setUser] = useState(null);
@@ -27,6 +26,7 @@ const App = () => {
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
+                    // @ts-ignore
                     "Access-Control-Allow-Credentials": true,
                 },
             })
@@ -48,6 +48,7 @@ const App = () => {
         <div >
             <div>
                 <Toaster
+                    // @ts-ignore
                     position="top-right" toastOptions={{ success: { theme: { primary: '#4aed88', }, }, }}
                 ></Toaster>
             </div>
@@ -60,9 +61,9 @@ const App = () => {
                     <Route path="/logout" element={<MyLogin />} />
                     <Route path="/ide" element={<CompilerPage />} />
                     <Route path="/invite" element={<InvitePage />} />
-                    <Route path="/ace" element={<AceEditors />} />
-
-                    <Route exact path="/" element={<QuestionsPage />} />
+                    <Route 
+// @ts-ignore
+                    exact path="/" element={<QuestionsPage />} />
 
                 </Routes>
 
