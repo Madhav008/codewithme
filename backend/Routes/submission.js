@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
+require('dotenv').config();
 var FormData = require("form-data");
 
 router.post("/", getResult);
-const cokkie_data = "gfguserName=telegramupfo%2FeyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvd3d3LmdlZWtzZm9yZ2Vla3Mub3JnXC8iLCJpYXQiOjE2NzE5Nzk0NjIsImV4cCI6MTY3MjA2NTg2MiwiaGFuZGxlIjoidGVsZWdyYW11cGZvIiwidXVpZCI6IjAzYTE1NDYzYTVhYzc0NzNhNGEzODdkMGU5MTcxOTk4IiwicHJvZmlsZVVybCI6Imh0dHBzOlwvXC9tZWRpYS5nZWVrc2ZvcmdlZWtzLm9yZ1wvaW1nLXByYWN0aWNlXC91c2VyX3dlYi0xNTk4NDMzMjI4LnN2ZyIsImluc3RpdHV0ZUlkIjozMDkxLCJpbnN0aXR1dGVOYW1lIjoiQ2hpdGthcmEgVW5pdmVyc2l0eSBTb2xhbiIsIm5hbWUiOiJUZWxlZ3JhbSBGaXJzdCIsImlzSW50ZXJlc3RTZWxlY3RlZCI6ZmFsc2UsInB1aWQiOiJ1bWlNVE5BXC8yUzQ9IiwicGEiOjF9.KSEXu5SyVuNHEZMW34nN7XbmG2F86LVrq-Yw5ZVCj2oFPCLm8GlDd9WaRWC61WyUL1H6RSwj0KuWFaPIrKP-HNDaGJNlEu9XH0WOlKjIOSkS5yZNJcbbIbqkHaVUMZkZ5R6bMJ7AYJgpyyADA4l1amiS64OJAfJ3vDl_EyBMnofE9le5BZUvzNoNXkHBiQ31B2MSzx4jcByAhYZ2GHKJHIpRwHRqr8ZTKGEyq5bg5Jpou6E2WgWCOvtsMaCc-G-Gl7PQqfnm01k30DCVm9De0zxMS4Whw3l0p2A_xaWk5NG6tqapJjTE9O_p_ECpmGGe1AyKdBQUO6QGamnSPU905Q";
+const cokkie_data = process.env.cokkie_key+"="+process.env.cokkie_value;
 const headersData = {
   authority: "practiceapiorigin.geeksforgeeks.org",
   accept: "*/*",

@@ -25,6 +25,9 @@ const JoinModal = () => {
             <div className="modal modal-bottom sm:modal-middle">
                 <div className="modal-box">
                     <h3 className="font-bold text-lg">Create The Room</h3>
+
+
+                  
                     <div className="form-control w-full">
                         <p>Select The Companies</p>
                         <Multiselect />
@@ -38,14 +41,14 @@ const JoinModal = () => {
                         <div className="form-control">
                             <label className="cursor-pointer label">
                                 <span className="label-text">Easy</span>
-                                <input type="checkbox"  className="checkbox checkbox-info" />
+                                <input type="checkbox" className="checkbox checkbox-info" />
                             </label>
                             <label className="cursor-pointer label">
                                 <span className="label-text">Medium</span>
-                                <input type="checkbox"  className="checkbox checkbox-info" />
+                                <input type="checkbox" className="checkbox checkbox-info" />
                             </label><label className="cursor-pointer label">
                                 <span className="label-text">Hard</span>
-                                <input type="checkbox"  className="checkbox checkbox-info" />
+                                <input type="checkbox" className="checkbox checkbox-info" />
                             </label>
                         </div>
                     </div>

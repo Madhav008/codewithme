@@ -13,13 +13,6 @@ const QuestionPageRightSide = () => {
       </div>
       <div className="mt-5 grid grid-cols-2 gap-4 overflow-x-hidden overflow-y-auto max-h-[220px]">
         <Room />
-        <Room />
-        <Room />
-        <Room />
-        <Room />
-        <Room />
-        <Room />
-        <Room />
       </div>
       <div className="h-[20px] m-0 divider"></div>
       <div className="h-64 ">
