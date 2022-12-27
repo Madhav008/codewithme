@@ -7,7 +7,7 @@ const Terminal = ({ placeholder, output }) => {
 
   // console.log(compiled_output);
 
-  if (output.data!=null) {
+  if (output.data != null) {
     return (
       <>
         <textarea
@@ -19,25 +19,55 @@ const Terminal = ({ placeholder, output }) => {
       </>
     );
   }
-  return (
-    <>
-      {compiled_output ? (
-        <div className="terminal text-lg p-3 bg-black h-[50%]">
-          <div>
-            Status: <strong>{compiled_output.status} </strong>
-          </div>
-          <div>
-            Passed TestCases: <strong>{compiled_output?.view_cases0}</strong>
-          </div>
-          <div>
-            Total TestCases:{" "}
-            <strong>{compiled_output?.total_test_cases}</strong>{" "}
-          </div>
-          <div>Error:{compiled_output?.message?.error}</div>
+
+  // ?.message?.error
+  if (compiled_output?.message?.error != null) {
+    return (<>
+
+
+      <div className="bg-red-900 bg-opacity-50 h-[50%] ">
+        <h1 className="text-red-500 font-semibold text-2xl">Compilation Error:-</h1>
+        <div>
+          <p className="text-red-700">
+            {compiled_output?.message?.error}
+          </p>
         </div>
-      ) : null}
-    </>
-  );
+      </div>
+
+    </>)
+  }
+
+  if (compiled_output?.status == "QUEUED") {
+    return (<>
+      <div className="h-[50%] bg-black">
+        <h1 className="font-bold text-xl"> Request Queued</h1>
+        <h2 className="font-semibold text-primary-focus text-lg"> Evaluating </h2>
+      </div>
+
+    </>)
+  }
+
+
+  if (compiled_output?.status == "SUCCESS") {
+    return (<>
+      <div className="h-[50%] bg-black">
+        <div className="m-2">
+          <h1 className="font-bold text-xl"> For Input</h1>
+          <h2 className=" text-primary-focus text-lg"> {compiled_output?.message?.input} </h2>
+
+          <h1 className="font-bold text-xl">Your Output: </h1>
+          <h2 className=" text-primary-focus text-lg"> {compiled_output?.message?.output}  </h2>
+
+          <h1 className="font-bold text-xl">Expected Output: </h1>
+          <h2 className=" text-primary-focus text-lg"> 6 </h2>
+
+        </div>
+      </div>
+
+    </>)
+  }
+
+
 };
 
 export default Terminal;

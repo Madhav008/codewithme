@@ -16,6 +16,7 @@ const Room = () => {
         return <h1>Loading</h1>
     }
 
+    console.log(rooms)
     return (
         <>
             {rooms.map((room, index) => (

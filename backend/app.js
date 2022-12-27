@@ -58,6 +58,8 @@ app.use('/problems',Problems);
 const SubmissionRoute = require('./Routes/submission')
 app.use('/result',SubmissionRoute);
 
+const CompileAndRunRoute = require('./Routes/compile_run')
+app.use('/',CompileAndRunRoute);
 const MetaRoute = require('./Routes/problem_meta')
 app.use('/info',MetaRoute);
 
