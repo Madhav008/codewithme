@@ -30,9 +30,9 @@ async function getOutput(req,res){
 }
 
 async function runCode(req,res){
-    const {input,code,lang,slug,pid} = req.body;
+    const {input,userCode,lang,slug,pid} = req.body;
     console.log(req.body)
-    const sub_id = await testSolution(input,code,lang,slug);
+    const sub_id = await testSolution(input,userCode,lang,slug);
     console.log(sub_id);
     const result = await getFinalResult(sub_id,"testSolution",pid);
     console.log(result);
@@ -61,14 +61,15 @@ async function getTheIntialCode(slug) {
   
   }
   
-async function testSolution(input, usercode, lang,slug) {
+async function testSolution(input, code, lang,slug) {
     var data = new FormData();
-    const code = await getTheIntialCode(slug);
+    const initialcode = await getTheIntialCode(slug);
 
     data.append('source', 'https://practice.geeksforgeeks.org');
     data.append('request_type', "testSolution");
     data.append('input', String(input));
-    const finalCode = code+"\r\n"+usercode;
+    const finalCode =initialcode+"\r\n"+ code;
+    console.log(finalCode);
     data.append('code', String(finalCode));
     data.append('language', String(lang));
 
