@@ -11,7 +11,6 @@ export const expectedCodeSlice = createSlice({
   initialState:{
     data:{},
     status: STATUSES.IDLE,
-    output:{},
   },
   reducers: {
     setExpectedCode: (state, action) => {
@@ -20,31 +19,27 @@ export const expectedCodeSlice = createSlice({
     setStatus(state, action) {
       state.status = action.payload;
     },
-    setOutput:(state, action) => {
-      state.output = action.payload
-    }
+
   },
 })
 
 // Action creators are generated for each case reducer function
-export const {setExpectedCode,setStatus ,setOutput} = userCodeSlice.actions
+export const {setExpectedCode,setStatus} = expectedCodeSlice.actions
 
-export default userCodeSlice.reducer
+export default expectedCodeSlice.reducer
 
 
 
-export function submitProblem() {
-  return async function fetchproblemMetaThunk(dispatch, getState) {
+export function getExpectedCode() {
+  return async function getExpectedCodeThunk(dispatch, getState) {
     dispatch(setStatus(STATUSES.LOADING));
     try {
       var problem_data = getState().problemMeta.data;
-      var user_code = getState().usercode.data;
 
       var submit_data = {
         "pid":problem_data.pid,
-        "userCode":user_code.code,
+        "input":problem_data.input,
         "slug":problem_data.slug,
-        "lang": user_code.lang
       }
 
 
@@ -54,7 +49,7 @@ export function submitProblem() {
 
       var raw = JSON.stringify(submit_data);
 
-      const res = await fetch(`${process.env.REACT_APP_Backend_URL}/result`, {
+      const res = await fetch(`${process.env.REACT_APP_Backend_URL}/run`, {
         method: "POST",
         headers: myHeaders,
         body: raw,
@@ -63,7 +58,7 @@ export function submitProblem() {
 
       const data = await res.json();
       dispatch(setStatus(STATUSES.LOADING))
-      dispatch(setOutput(data));
+      dispatch(setExpectedCode(data));
       dispatch(setStatus(STATUSES.IDLE));
     } catch (err) {
       console.log(err);

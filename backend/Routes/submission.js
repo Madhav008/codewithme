@@ -5,7 +5,7 @@ require('dotenv').config();
 var FormData = require("form-data");
 
 router.post("/", getResult);
-const cokkie_data = process.env.cokkie_key+"="+process.env.cokkie_value;
+const cokkie_data = process.env.cokkie_key + "=" + process.env.cokkie_value;
 const headersData = {
   authority: "practiceapiorigin.geeksforgeeks.org",
   accept: "*/*",
@@ -31,7 +31,7 @@ async function getTheIntialCode(slug) {
 
   try {
     const res = await axios(config);
-    console.log(res.data.results)
+    // console.log(res.data.results)
     return (res.data.results.extra.initial_user_func.java.initial_code);
   } catch (error) {
     console.log(error.message)
@@ -46,6 +46,7 @@ async function getResult(req, res) {
   try {
     const code = await getTheIntialCode(slug);
     console.log(code)
+    console.log(userCode)
     const sub_id = await sendSubmissionRequest(userCode, code, lang, slug);
     console.log(sub_id);
     const output = await getFinalResult(sub_id, pid);
@@ -60,8 +61,13 @@ async function sendSubmissionRequest(userCode, code, lang, slug) {
   data.append("source", "https://practice.geeksforgeeks.org");
   data.append("request_type", "solutionCheck");
   data.append("userCode", userCode);
-  data.append("code", code);
+
+  const finalCode = code + "\r\n " + userCode;
+  data.append("code", finalCode);
   data.append("language", "java");
+
+
+
   try {
     var config = {
       method: "post",
@@ -69,16 +75,19 @@ async function sendSubmissionRequest(userCode, code, lang, slug) {
         "https://practiceapiorigin.geeksforgeeks.org/api/latest/problems/" +
         slug +
         "/compile/",
-      headers: headersData,
-      data: data,
+      headers: {
+        'content-type':"multipart/ form - data; boundary = ----WebKitFormBoundary7vpkmsNhR4rvMxb0",
+        ...headersData
+  },
+  data: data,
     };
 
-    const res = await axios(config);
+const res = await axios(config);
 
-    return res.data.results.submission_id;
+return res.data.results.submission_id;
   } catch (error) {
-    console.log(error.message);
-  }
+  console.log(error.message);
+}
 }
 
 async function getFinalResult(sub_id, pid) {

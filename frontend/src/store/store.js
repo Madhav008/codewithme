@@ -4,6 +4,7 @@ import problemMetaReducer from "./ProblemMetaSlice";
 import companiesReducer from "./companiesSlice";
 import topicsReducer from "./topicsSlice";
 import userCodeReducer from "./userCodeSlice";
+import expectedCodeReducer from "./expectedCodeSlice";
 import roomReducer from "./roomSlice";
 
 export const store = configureStore({
@@ -14,5 +15,6 @@ export const store = configureStore({
     room: roomReducer,
     topics: topicsReducer,
     usercode: userCodeReducer,
+    expectedcode:expectedCodeReducer
   },
 });

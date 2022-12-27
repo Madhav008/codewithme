@@ -1,20 +1,25 @@
 import React from 'react'
 import Timer from '../Timer/Timer'
 
-import { useDispatch,useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom';
-import { submitProblem } from '../../store/userCodeSlice';
+import { compileProblem, submitProblem } from '../../store/userCodeSlice';
+import { getExpectedCode } from '../../store/expectedCodeSlice';
 
-const Runbar = ({ chatbox,run }) => {
-    const { data, status,submitData } = useSelector((state) => state.problemMeta)
+const Runbar = ({ chatbox }) => {
+    const { data, status, submitData } = useSelector((state) => state.problemMeta)
 
     const dispatch = useDispatch();
 
-    function submitSolution(){
+    function submitSolution() {
 
         dispatch(submitProblem())
     }
 
+    function getOutput(){
+        dispatch(getExpectedCode())
+        dispatch(compileProblem())
+    }
 
     return (
         <div className="navbar bg-[#020a07]">
@@ -27,8 +32,8 @@ const Runbar = ({ chatbox,run }) => {
                     <li>
                         <Timer />
                     </li>
-                    <li><button onClick={run} className='btn btn-secondary bg-secondary text-gray-200'>Run</button></li>
-                    {<li><button onClick={submitSolution} className='btn btn-secondary bg-secondary text-gray-200 ml-3'>Submit</button></li> }
+                    <li><button onClick={getOutput} className='btn btn-secondary bg-secondary text-gray-200'>Run</button></li>
+                    {<li><button onClick={submitSolution} className='btn btn-secondary bg-secondary text-gray-200 ml-3'>Submit</button></li>}
 
                     <li className='ml-4'><select className="select bg-base-100 w-[150px] ">
                         <option>Java</option>

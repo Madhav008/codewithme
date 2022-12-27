@@ -5,7 +5,7 @@ require('dotenv').config();
 var FormData = require("form-data");
 
 router.post("/compile", runCode);
-router.post("/run", expectedOutput);
+router.post("/run", getOutput);
 
 
 const cokkie_data = process.env.cokkie_key + "=" + process.env.cokkie_value;
@@ -19,26 +19,62 @@ const headersData = {
     // ...data.getHeaders(),
 };
 
+async function getOutput(req,res){
+    const {input,slug,pid} = req.body;
+    console.log(req.body)
+    const sub_id = await expectedOutput(input,slug);
+    console.log(sub_id);
+    const result = await getFinalResult(sub_id,"expectedOutput",pid);
+    console.log(result);
+    res.status(200).send(result);
+}
 
-async function runCode(){
-    const sub_id = await testSolution();
+async function runCode(req,res){
+    const {input,code,lang,slug,pid} = req.body;
+    console.log(req.body)
+    const sub_id = await testSolution(input,code,lang,slug);
     console.log(sub_id);
     const result = await getFinalResult(sub_id,"testSolution",pid);
     console.log(result);
-    // res.status(200).send(result);
+    res.status(200).send(result);
 }
-
-async function testSolution(input, code, lang) {
+async function getTheIntialCode(slug) {
+    var config = {
+      method: "get",
+      url:
+        "https://practiceapi.geeksforgeeks.org/api/latest/problems/" +
+        slug +
+        "/metainfo/?",
+      headers: {
+        "Accept-Encoding": "application/json",
+        ...headersData
+      },
+    };
+  
+    try {
+      const res = await axios(config);
+      // console.log(res.data.results)
+      return (res.data.results.extra.initial_user_func.java.initial_code);
+    } catch (error) {
+      console.log(error.message)
+    }
+  
+  }
+  
+async function testSolution(input, usercode, lang,slug) {
     var data = new FormData();
+    const code = await getTheIntialCode(slug);
+
     data.append('source', 'https://practice.geeksforgeeks.org');
-    data.append('request_type', 'testSolution');
-    data.append('input', '4\r\n1 5 4 3');
-    data.append('code', '//{ Driver Code Starts\r\n//Initial Template for Java');
-    data.append('language', 'java');
+    data.append('request_type', "testSolution");
+    data.append('input', String(input));
+    const finalCode = code+"\r\n"+usercode;
+    data.append('code', String(finalCode));
+    data.append('language', String(lang));
 
     var config = {
         method: 'post',
-        url: 'https://practiceapiorigin.geeksforgeeks.org/api/latest/problems/container-with-most-water0535/compile/',
+        url: 'https://practiceapiorigin.geeksforgeeks.org/api/latest/problems/'+slug+'/compile/',
         headers: headersData,
         data: data
     };
@@ -52,16 +88,16 @@ async function testSolution(input, code, lang) {
     }
 }
 
-async function expectedOutput(input) {
+async function expectedOutput(input,slug) {
     var data = new FormData();
     data.append('source', 'https://practice.geeksforgeeks.org');
     data.append('request_type', 'expectedOutput');
-    data.append('input', '4\r\n1 5 4 3');
+    data.append('input', input);
 
 
     var config = {
         method: 'post',
-        url: 'https://practiceapiorigin.geeksforgeeks.org/api/latest/problems/container-with-most-water0535/compile/',
+        url: 'https://practiceapiorigin.geeksforgeeks.org/api/latest/problems/'+slug+'/compile/',
         headers: headersData,
         data: data
     };
@@ -77,9 +113,9 @@ async function expectedOutput(input) {
 }
 async function getFinalResult(sub_id, pid,sub_type) {
     var data = new FormData();
-    data.append("sub_id", sub_id);
-    data.append("sub_type", sub_type);
-    data.append("pid", pid);
+    data.append('sub_id', String(sub_id));
+    data.append('sub_type', String(sub_type));
+    data.append('pid', String(pid));
 
     var config = {
         method: "post",
@@ -98,7 +134,7 @@ async function getFinalResult(sub_id, pid,sub_type) {
             return response.data;
         }
     } catch (error) {
-        console.log(error.message);
+        console.log(error);
     }
 }
 

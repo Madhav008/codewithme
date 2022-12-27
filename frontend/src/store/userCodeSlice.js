@@ -32,9 +32,47 @@ export const {setUserCode,setStatus ,setOutput} = userCodeSlice.actions
 export default userCodeSlice.reducer
 
 
+export function compileProblem() {
+  return async function compileProblemThunk(dispatch, getState) {
+    dispatch(setStatus(STATUSES.LOADING));
+    try {
+      var problem_data = getState().problemMeta.data;
+      var user_code = getState().usercode.data;
 
+      var submit_data = {
+        "input":problem_data.input,
+        "pid":problem_data.pid,
+        "userCode":user_code.code,
+        "slug":problem_data.slug,
+        "lang": user_code.lang
+      }
+
+
+
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      var raw = JSON.stringify(submit_data);
+
+      const res = await fetch(`${process.env.REACT_APP_Backend_URL}/compile`, {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      });
+
+      const data = await res.json();
+      dispatch(setStatus(STATUSES.LOADING))
+      dispatch(setOutput(data));
+      dispatch(setStatus(STATUSES.IDLE));
+    } catch (err) {
+      console.log(err);
+      dispatch(setStatus(STATUSES.ERROR));
+    }
+  };
+}
 export function submitProblem() {
-  return async function fetchproblemMetaThunk(dispatch, getState) {
+  return async function submitProblemThunk(dispatch, getState) {
     dispatch(setStatus(STATUSES.LOADING));
     try {
       var problem_data = getState().problemMeta.data;
