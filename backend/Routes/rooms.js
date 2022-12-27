@@ -14,20 +14,81 @@ router.get("/", async function (req, res) {
 
 //Create a new Rooom
 router.post("/create", async function (req, res) {
-  const { roomname, userid, questions } = req.body;
-
-  if (!roomname || !userid || !questions) {
-    res.status(404).send({error:"Please enter all fields."});
-  }
+  const { userid, name, topic, company, difficulty } = req.body;
   try {
-    const new_room = new ChatRoom({
-      roomname: roomname,
-      users: [userid],
-      questions: questions,
-    });
-    await new_room.save();
-
-    res.status(200).send(new_room);
+    if (!topic && !company && !difficulty) {
+      const questions = await getAllProblems();
+      const new_room = new ChatRoom({
+        roomname: name,
+        users: [userid],
+        questions: questions,
+      });
+      const room = await new_room.save();
+      res.status(200).send(room);
+    } else if (topic && !company && !difficulty) {
+      const questions = await getProblemByTopic(topic);
+      const new_room = new ChatRoom({
+        roomname: name,
+        users: [userid],
+        questions: questions,
+      });
+      const room = await new_room.save();
+      res.status(200).send(room);
+    } else if (!topic && company && !difficulty) {
+      const questions = await getProblemByCompany(company);
+      const new_room = new ChatRoom({
+        roomname: name,
+        users: [userid],
+        questions: questions,
+      });
+      const room = await new_room.save();
+      res.status(200).send(room);
+    } else if (!topic && !company && difficulty) {
+      const questions = await getProblemByDifficulty(difficulty);
+      const new_room = new ChatRoom({
+        roomname: name,
+        users: [userid],
+        questions: questions,
+      });
+      const room = await new_room.save();
+      res.status(200).send(room);
+    } else if (topic && company && !difficulty) {
+      const questions = await getProblemByCompany_Topic(company, topic);
+      const new_room = new ChatRoom({
+        roomname: name,
+        users: [userid],
+        questions: questions,
+      });
+      const room = await new_room.save();
+      res.status(200).send(room);
+    } else if (topic && !company && difficulty) {
+      const questions = await getProblemByDifficulty_Topic(difficulty, topic);
+      const new_room = new ChatRoom({
+        roomname: name,
+        users: [userid],
+        questions: questions,
+      });
+      const room = await new_room.save();
+      res.status(200).send(room);
+    } else if (!topic && company && difficulty) {
+      const questions = await getProblemByCompany_Difficulty(company, difficulty);
+      const new_room = new ChatRoom({
+        roomname: name,
+        users: [userid],
+        questions: questions,
+      });
+      const room = await new_room.save();
+      res.status(200).send(room);
+    } else {
+      const questions = await getProblemByCompany_Difficulty_Topic(company, difficulty, topic);
+      const new_room = new ChatRoom({
+        roomname: name,
+        users: [userid],
+        questions: questions,
+      });
+      const room = await new_room.save();
+      res.status(200).send(room);
+    }
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -104,5 +165,202 @@ async function deleteRoom(roomname) {
     return false;
   }
 }
+
+
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+const Questions = require('../Models/Questions')
+
+//Generate random questions 
+
+async function getAllProblems() {
+  const problems = await Questions.find().select('-url');
+  let randomNumbers = [];
+
+  for (let i = 0; i < 4; i++) {
+    let randomIndex = getRandomInt(1, problems.length);
+    randomNumbers.push(randomIndex);
+  }
+
+  let randomQuestions = [];
+
+  for (let i = 0; i < randomNumbers.length; i++) {
+    const index = randomNumbers[i];
+    const question = problems[index];
+
+    randomQuestions.push(question);
+
+  }
+  return randomQuestions;
+
+}
+
+async function getProblemByDifficulty(difficulty) {
+  const problems = await Questions.find({ difficulty: difficulty }).select('-url');
+  let randomNumbers = [];
+
+  for (let i = 0; i < 4; i++) {
+    let randomIndex = getRandomInt(1, problems.length);
+    randomNumbers.push(randomIndex);
+  }
+
+  let randomQuestions = [];
+
+  for (let i = 0; i < randomNumbers.length; i++) {
+    const index = randomNumbers[i];
+    const question = problems[index];
+
+    randomQuestions.push(question);
+
+  }
+  return randomQuestions;
+}
+
+async function getProblemByTopic(topic) {
+  const problems = await Questions.find({ topics_tags: topic }).select('-url');
+  let randomNumbers = [];
+
+  for (let i = 0; i < 4; i++) {
+    let randomIndex = getRandomInt(1, problems.length);
+    randomNumbers.push(randomIndex);
+  }
+
+  let randomQuestions = [];
+
+  for (let i = 0; i < randomNumbers.length; i++) {
+    const index = randomNumbers[i];
+    const question = problems[index];
+
+    randomQuestions.push(question);
+
+  }
+  return randomQuestions;
+}
+async function getProblemByCompany(company) {
+  const problems = await Questions.find({ company_tags: company }).select('-url');
+  let randomNumbers = [];
+
+  for (let i = 0; i < 4; i++) {
+    let randomIndex = getRandomInt(1, problems.length);
+    randomNumbers.push(randomIndex);
+  }
+
+  let randomQuestions = [];
+
+  for (let i = 0; i < randomNumbers.length; i++) {
+    const index = randomNumbers[i];
+    const question = problems[index];
+
+    randomQuestions.push(question);
+
+  }
+  return randomQuestions;
+}
+
+async function getProblemByDifficulty_Topic(difficulty, topic) {
+  const problems = await Questions.find({ difficulty: difficulty, topics_tags: topic }).select('-url');
+  let randomNumbers = [];
+  console.log("ALL PROBLEMS: " + problems.length);
+  for (let i = 0; i < 4; i++) {
+    let randomIndex = getRandomInt(1, problems.length);
+    console.log(randomIndex);
+    randomNumbers.push(randomIndex);
+  }
+
+  let randomQuestions = [];
+
+  for (let i = 0; i < randomNumbers.length; i++) {
+    const index = randomNumbers[i];
+    const question = problems[index];
+
+    randomQuestions.push(question);
+
+  }
+  return randomQuestions;
+}
+
+async function getProblemByCompany_Topic(company, topic) {
+  const problems = await Questions.find({ company_tags: company, topics_tags: topic }).select('-url');
+  let randomNumbers = [];
+  console.log("ALL PROBLEMS: " + problems.length);
+  for (let i = 0; i < 4; i++) {
+    let randomIndex = getRandomInt(1, problems.length);
+    console.log(randomIndex);
+    randomNumbers.push(randomIndex);
+  }
+
+  let randomQuestions = [];
+
+  for (let i = 0; i < randomNumbers.length; i++) {
+    const index = randomNumbers[i];
+    const question = problems[index];
+
+    randomQuestions.push(question);
+
+  }
+  return randomQuestions;
+}
+
+async function getProblemByCompany_Difficulty(company, difficulty) {
+  const problems = await Questions.find({ company_tags: company, difficulty: difficulty }).select('-url');
+  let randomNumbers = [];
+  console.log("ALL PROBLEMS: " + problems.length);
+  for (let i = 0; i < 4; i++) {
+    let randomIndex = getRandomInt(1, problems.length);
+    console.log(randomIndex);
+    randomNumbers.push(randomIndex);
+  }
+
+  let randomQuestions = [];
+
+  for (let i = 0; i < randomNumbers.length; i++) {
+    const index = randomNumbers[i];
+    const question = problems[index];
+
+    randomQuestions.push(question);
+
+  }
+  return randomQuestions;
+}
+
+async function getProblemByCompany_Difficulty_Topic(company, difficulty, topic) {
+  const problems = await Questions.find({ company_tags: company, topics_tags: topic, difficulty: difficulty }).select('-url');
+  let randomNumbers = [];
+  console.log("ALL PROBLEMS: " + problems.length);
+  for (let i = 0; i < 4; i++) {
+    let randomIndex = getRandomInt(1, problems.length);
+    console.log(randomIndex);
+    randomNumbers.push(randomIndex);
+  }
+
+  let randomQuestions = [];
+
+  for (let i = 0; i < randomNumbers.length; i++) {
+    const index = randomNumbers[i];
+    const question = problems[index];
+
+    randomQuestions.push(question);
+
+  }
+  return randomQuestions;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = router;

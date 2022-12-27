@@ -67,11 +67,35 @@ const Terminal = ({ placeholder, output }) => {
 
     </>)
   }
+  if (compiled_output?.status == "calculated" && compiled_output?.view_mode == "wrong_p") {
+    return (<>
+      <div className="bg-red-900 bg-opacity-50 h-[50%] overflow-auto">
+        <div className="m-2">
+          <h1 className="text-red-500 font-semibold text-2xl"> Wrong Output: </h1>
 
+          <h1 className="font-bold text-xl">Test Cases Passed: </h1>
+          <h2 className=" text-primary-focus text-lg">{compiled_output?.test_cases_processed}/{compiled_output?.total_test_cases} </h2>
+
+          <h1 className="font-bold text-xl"> For Input</h1>
+          <h2 className=" text-primary-focus text-lg"> {compiled_output?.message?.file_input} </h2>
+
+          <h1 className="font-bold text-xl">Your Output: </h1>
+          <h2 className=" text-primary-focus text-lg"> {compiled_output?.message?.code_output}  </h2>
+
+          <h1 className="font-bold text-xl">Expected Output: </h1>
+          <h2 className=" text-primary-focus text-lg"> {compiled_output?.message?.file_output} </h2>
+
+
+        </div>
+      </div>
+
+    </>)
+  }
   if (compiled_output?.status == "calculated") {
     return (<>
       <div className="h-[50%] bg-black">
         <div className="m-2">
+          <h1 className="font-bold text-2xl text-green-600">ACCEPTED</h1>
           <h1 className="font-bold text-xl"> Test Cases Passed: </h1>
           <h2 className=" text-primary-focus text-lg"> {compiled_output?.total_test_cases} / {compiled_output?.test_cases_processed} </h2>
 
@@ -82,6 +106,8 @@ const Terminal = ({ placeholder, output }) => {
 
     </>)
   }
+
+
 };
 
 export default Terminal;

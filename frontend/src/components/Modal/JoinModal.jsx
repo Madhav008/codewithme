@@ -1,6 +1,26 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Multiselect from '../MultiSelectComp/Multiselect'
+import { useDispatch, useSelector } from "react-redux";
+import { fetchcompany } from '../../store/companiesSlice';
+import {fetchtopic} from '../../store/topicsSlice'
+import { createroom, fetchrooms, setCreaateRoom } from '../../store/roomSlice';
 const JoinModal = () => {
+
+    const { data: company } = useSelector((state) => state.companies);
+    const { data: topic } = useSelector((state) => state.topics);
+    const { createRoom } = useSelector((state) => state.room);
+
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+      
+        dispatch(fetchcompany())
+        dispatch(fetchtopic())
+    }, [])
+    
+
+
     const [min, setmin] = useState(0)
     function setValue() {
 
@@ -14,10 +34,32 @@ const JoinModal = () => {
             setmin(min - 15);
         }
     }
+    const [selectedCompany, setSelectedCompany] = useState("Select");
+    const [selectedTopic, setSelectedTopic] = useState("Select");
+    
+    function slectCompany(item){
+        setSelectedCompany(item);
+    }
 
+    function selectTopic(item){
+        setSelectedTopic(item);
+    }
+
+    function create(){
+
+        dispatch(setCreaateRoom({
+            userid:"Madhav",
+            topic:selectedTopic,
+            company:selectedCompany,
+
+        }));
+        console.log(createRoom)
+        dispatch(createroom());
+        dispatch(fetchrooms());
+    }
 
     return (
-        <div className='mr-2 '>{/* The button to open modal */}
+        <div className='mr-2'>{/* The button to open modal */}
             <label htmlFor="my-modal-6" className="btn btn-sm ">Create Room</label>
 
             {/* Put this part before </body> tag */}
@@ -27,14 +69,14 @@ const JoinModal = () => {
                     <h3 className="font-bold text-lg">Create The Room</h3>
 
 
-                  
+
                     <div className="form-control w-full">
                         <p>Select The Companies</p>
-                        <Multiselect />
+                        <Multiselect items={company?company[0]?.Companies:null} select={slectCompany} value={selectedCompany}/>
                     </div>
                     <div >
                         <p>Select the Topics</p>
-                        <Multiselect />
+                        <Multiselect items={topic?topic[0]?.Topics:null} select={selectTopic} value={selectedTopic} />
                     </div>
                     <div >
                         <p>Select the Difficulty</p>
@@ -77,9 +119,15 @@ const JoinModal = () => {
 
                         </div>
                     </div>
-                    <div className="modal-action">
+                    <div className='flex justify-between'>
+                    <div className="modal-action" >
+                        <label htmlFor="my-modal-6" className="btn">Close!</label>
+                    </div>
+                    <div className="modal-action" onClick={create}>
                         <label htmlFor="my-modal-6" className="btn">Create!</label>
                     </div>
+                    </div>
+                   
                 </div>
             </div></div>
     )

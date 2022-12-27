@@ -5,13 +5,137 @@ export const STATUSES = Object.freeze({
   ERROR: "error",
   LOADING: "loading",
 });
+const nameData = 
+	 [
+		"nar",
+		"An",
+		"Alfr",
+		"Alvi",
+		"Ari",
+		"Arinbjorn",
+		"Arngeir",
+		"Arngrim",
+		"Arnfinn",
+		"Asgeirr",
+		"Askell",
+		"Asvald",
+		"Bard",
+		"Baror",
+		"Bersi",
+		"Borkr",
+		"Bjarni",
+		"Bjorn",
+		"Brand",
+		"Brandr",
+		"Cairn",
+		"Canute",
+		"Dar",
+		"Einarr",
+		"Eirik",
+		"Egill",
+		"Engli",
+		"Eyvindr",
+		"Erik",
+		"Eyvind",
+		"Finnr",
+		"Floki",
+		"Fromund",
+		"Geirmundr",
+		"Geirr",
+		"Geri",
+		"Gisli",
+		"Gizzur",
+		"Gjafvaldr",
+		"Glumr",
+		"Gorm",
+		"Grmir",
+		"Gunnarr",
+		"Guomundr",
+		"Hak",
+		"Halbjorn",
+		"Halfdan",
+		"Hallvard",
+		"Hamal",
+		"Hamundr",
+		"Harald",
+		"Harek",
+		"Hedinn",
+		"Helgi",
+		"Henrik",
+		"Herbjorn",
+		"Herjolfr",
+		"Hildir",
+		"Hogni",
+		"Hrani",
+		"Ivarr",
+		"Hrolf",
+		"Jimmy",
+		"Jon",
+		"Jorund",
+		"Kalf",
+		"Ketil",
+		"Kheldar",
+		"Klaengr",
+		"Knut",
+		"Kolbeinn",
+		"Kolli",
+		"Kollr",
+		"Lambi",
+		"Magnus",
+		"Moldof",
+		"Mursi",
+		"Njall",
+		"Oddr",
+		"Olaf",
+		"Orlyg",
+		"Ormr",
+		"Ornolf",
+		"Osvald",
+		"Ozurr",
+		"Poror",
+		"Prondir",
+		"Ragi",
+		"Ragnvald",
+		"Refr",
+		"Runolf",
+		"Saemund",
+		"Siegfried",
+		"Sigmundr",
+		"Sigurd",
+		"Sigvat",
+		"Skeggi",
+		"Skomlr",
+		"Slode",
+		"Snorri",
+		"Sokkolf",
+		"Solvi",
+		"Surt",
+		"Sven",
+		"Thangbrand",
+		"Thjodoft",
+		"Thorod",
+		"Thorgest",
+		"Thorvald",
+		"Thrain",
+		"Throst",
+		"Torfi",
+		"Torix",
+		"Tryfing",
+		"Ulf",
+		"Valgaror",
+		"Vali",
+		"Vifil",
+		"Vigfus",
+		"Vika",
+		"Waltheof"
+	]
 
 const roomSlice = createSlice({
   name: "room",
   initialState: {
     data: [],
     status: STATUSES.IDLE,
-    createRomm: {},
+    createRoom: {},
   },
   reducers: {
     setroom(state, action) {
@@ -20,10 +144,13 @@ const roomSlice = createSlice({
     setStatus(state, action) {
       state.status = action.payload;
     },
+    setCreaateRoom(state, action) {
+      state.createRoom = action.payload;
+    },
   },
 });
 
-export const { setroom, setStatus } = roomSlice.actions;
+export const { setroom, setStatus,setCreaateRoom } = roomSlice.actions;
 export default roomSlice.reducer;
 
 // Thunks
@@ -50,12 +177,28 @@ export function fetchrooms() {
     }
   };
 }
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 export function createroom() {
-  return async function fetchroomThunk(dispatch, getState) {
+  return async function createroomThunk(dispatch, getState) {
     dispatch(setStatus(STATUSES.LOADING));
 
     try {
-      var newroom = getState().room.createRomm;
+      var newroom = getState().room.createRoom;
+      const index = getRandomInt(0,nameData.length);
+      
+      var newData = {
+        name: nameData[index],
+        userid: newroom.userid,
+        topic:newroom.topic,
+        company:newroom.company
+      }
+
+      console.log(newData);
 
       const res = await fetch(
         `${process.env.REACT_APP_Backend_URL}/room/create`,
@@ -67,7 +210,7 @@ export function createroom() {
             "Content-Type": "application/json",
             "Access-Control-Allow-Credentials": true,
           },
-          body: newroom,
+          body: JSON.stringify(newData),
         }
       );
       const data = await res.json();

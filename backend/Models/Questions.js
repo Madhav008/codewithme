@@ -18,5 +18,5 @@ const ProblemsSchema = new Schema({
   url:String,
 });
 
-const ChatRoom = mongoose.model('problems', ProblemsSchema);
-module.exports = ChatRoom;
+const Problems = mongoose.model('problems', ProblemsSchema);
+module.exports = Problems;

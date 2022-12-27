@@ -5,7 +5,7 @@ const Dropdown = ({ list, addItem }) => {
 
 
     return (
-        <div id="dropdown" className="absolute shadow top-100  z-40 w-[90%] lef-0 rounded max-h-select overflow-y-auto ">
+        <div id="dropdown" className="absolute shadow top-100  z-40 w-[90%] lef-0 rounded max-h-select overflow-auto h-[320px]">
             <div className="flex flex-col w-full">
                 {list.map((item, key) => {
                     return <div key={key}
