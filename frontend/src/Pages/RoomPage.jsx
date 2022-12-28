@@ -33,10 +33,10 @@ const RoomPage = () => {
     const { roomname } = useParams();
 
     useEffect(() => {
+        dispatch(setRoomName(roomname))
+        dispatch(joinTheRoom())
         if (!joined) {
-            dispatch(setRoomName(roomname))
             dispatch(setJoined())
-            dispatch(joinTheRoom())
         }
     }, [])
 

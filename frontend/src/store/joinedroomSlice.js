@@ -55,6 +55,36 @@ export const { setJoined, setStatus, setRoomdata, setRoomName, setProblems, next
 
 export default joinedRoomSlice.reducer
 
+export function leaveTheRoom() {
+  return async function leaveTheroomThunk(dispatch, getState) {
+    dispatch(setStatus(STATUSES.LOADING));
+
+    var roomname = getState().joinedroom.name;
+    try {
+      const res = await fetch(`${process.env.REACT_APP_Backend_URL}/room/leave/${roomname}`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": true,
+        },
+        body: JSON.stringify({ userid: "MadhavReact" })
+      });
+      await res.json();
+      // dispatch(setRoomdata(data));
+
+      dispatch(setStatus(STATUSES.IDLE));
+    } catch (err) {
+      console.log(err);
+      dispatch(setStatus(STATUSES.ERROR));
+    }
+  };
+}
+
+
+
+
 export function joinTheRoom() {
   return async function getroomThunk(dispatch, getState) {
     dispatch(setStatus(STATUSES.LOADING));

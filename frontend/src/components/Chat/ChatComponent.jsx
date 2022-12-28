@@ -1,9 +1,13 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { leaveTheRoom } from '../../store/joinedroomSlice'
+import { useNavigate } from 'react-router-dom';
 
 const ChatComponent = () => {
     const { joined, roomdata, problems } = useSelector((state) => state.joinedroom)
+    const navigate = useNavigate();
 
+    const dispatch = useDispatch();
     return (
         <div className='h-[80vh]'>
             <div className="w-full px-5 flex flex-col justify-between overflow-y-auto  h-[90%]">
@@ -12,7 +16,7 @@ const ChatComponent = () => {
                     <div className=" flex items-center justify-between gap-2 m-auto">
 
                         <div className="badge badge-primary text-white">Invite</div>
-                        <div className="badge badge-accent text-white">Leave</div>
+                        <div onClick={()=>{dispatch(leaveTheRoom());navigate(`/`)}} className="badge badge-accent text-white">Leave</div>
                         <div className="badge badge-lg "> Joined {roomdata[0]?.users.length}</div>
                     </div>
 

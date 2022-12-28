@@ -131,7 +131,7 @@ router.post("/join/:name", async function (req, res) {
   //When user get removed from the room
 });
 
-router.put("/leave/:name", async function (req, res) {
+router.post("/leave/:name", async function (req, res) {
   //When user get removed from the room
   const roomname = req.params.name;
   const { userid } = req.body;
