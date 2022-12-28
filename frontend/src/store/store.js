@@ -6,6 +6,7 @@ import topicsReducer from "./topicsSlice";
 import userCodeReducer from "./userCodeSlice";
 import expectedCodeReducer from "./expectedCodeSlice";
 import roomReducer from "./roomSlice";
+import joinedRoomReducer from "./joinedroomSlice";
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     room: roomReducer,
     topics: topicsReducer,
     usercode: userCodeReducer,
-    expectedcode:expectedCodeReducer
+    expectedcode:expectedCodeReducer,
+    joinedroom: joinedRoomReducer,
   },
 });

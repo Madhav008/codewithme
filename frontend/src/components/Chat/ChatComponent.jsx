@@ -1,6 +1,9 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-const ChatComponent = ({ leaveRoom, copyRoomId }) => {
+const ChatComponent = () => {
+    const { joined, roomdata, problems } = useSelector((state) => state.joinedroom)
+
     return (
         <div className='h-[80vh]'>
             <div className="w-full px-5 flex flex-col justify-between overflow-y-auto  h-[90%]">
@@ -10,7 +13,7 @@ const ChatComponent = ({ leaveRoom, copyRoomId }) => {
 
                         <div className="badge badge-primary text-white">Invite</div>
                         <div className="badge badge-accent text-white">Leave</div>
-                        <div className="badge badge-lg "> Joined 9</div>
+                        <div className="badge badge-lg "> Joined {roomdata[0]?.users.length}</div>
                     </div>
 
                 </div>

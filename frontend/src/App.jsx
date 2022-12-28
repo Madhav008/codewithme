@@ -14,6 +14,7 @@ import { Toaster } from 'react-hot-toast'
 import InvitePage from "./Pages/InvitePage";
 import QuestionsPage from "./Pages/QuestionsPage";
 import CompilerPage from "./Pages/CompilerPage";
+import RoomPage from "./Pages/RoomPage";
 
 const App = () => {
     const [user, setUser] = useState(null);
@@ -26,7 +27,6 @@ const App = () => {
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
-                    // @ts-ignore
                     "Access-Control-Allow-Credentials": true,
                 },
             })
@@ -48,22 +48,19 @@ const App = () => {
         <div >
             <div>
                 <Toaster
-                    // @ts-ignore
                     position="top-right" toastOptions={{ success: { theme: { primary: '#4aed88', }, }, }}
                 ></Toaster>
             </div>
             <Router>
-
                 <Navbar user={user} />
                 <Routes>
-                    <Route path="/problem/:pid" element={<Home user={user}  />} />
+                    <Route path="/problem/:pid" element={<Home/>} />
                     <Route path="/login" element={user ? <Navigate to="/" /> : <MyLogin />} />
                     <Route path="/logout" element={<MyLogin />} />
                     <Route path="/ide" element={<CompilerPage />} />
                     <Route path="/invite" element={<InvitePage />} />
-                    <Route 
-// @ts-ignore
-                    exact path="/" element={<QuestionsPage />} />
+                    <Route path="/room/:roomname" element={<RoomPage />} />
+                    <Route exact path="/" element={<QuestionsPage />} />
 
                 </Routes>
 

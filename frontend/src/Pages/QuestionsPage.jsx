@@ -7,9 +7,12 @@ import { setPage } from '../store/QuestionsSlice'
 import { fetchquestions } from '../store/QuestionsSlice';
 import {fetchcompany} from '../store/companiesSlice';
 import { fetchtopic } from '../store/topicsSlice'
+import { setJoined } from '../store/joinedroomSlice'
 
 const QuestionsPage = () => {
     const { page } = useSelector((state) => state.questions)
+    const { joined} = useSelector((state) => state.joinedroom)
+
     const dispatch = useDispatch();
     function nextPage() {
         dispatch(setPage(page + 1));
@@ -23,6 +26,8 @@ const QuestionsPage = () => {
 
     useEffect(() => {
         dispatch(fetchquestions())
+        if(joined)
+            dispatch(setJoined())
     }, [])
 
     useEffect(() => {

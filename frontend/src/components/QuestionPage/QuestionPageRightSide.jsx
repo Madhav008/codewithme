@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Room from "../Room/Room";
 import JoinModal from "../Modal/JoinModal";
 import CompaniesComponent from "../Companies/CompaniesComponent";
 import TopicsTag from "../Topics/TopicsTag";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchrooms } from "../../store/roomSlice";
 
 const QuestionPageRightSide = () => {
+
   return (
     <>
       <div className="flex justify-between w-[100%] m-auto max-w-[440px]">

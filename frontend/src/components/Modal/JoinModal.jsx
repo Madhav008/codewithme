@@ -2,23 +2,27 @@ import React, { useEffect, useState } from 'react'
 import Multiselect from '../MultiSelectComp/Multiselect'
 import { useDispatch, useSelector } from "react-redux";
 import { fetchcompany } from '../../store/companiesSlice';
-import {fetchtopic} from '../../store/topicsSlice'
-import { createroom, fetchrooms, setCreaateRoom } from '../../store/roomSlice';
+import { fetchtopic } from '../../store/topicsSlice'
+import {  createroom, createRoomName, setCreaateRoom } from '../../store/roomSlice';
+import { setJoined } from '../../store/joinedroomSlice';
+import { useNavigate } from 'react-router-dom';
+
 const JoinModal = () => {
 
     const { data: company } = useSelector((state) => state.companies);
     const { data: topic } = useSelector((state) => state.topics);
-    const { createRoom } = useSelector((state) => state.room);
+    const { roomname } = useSelector((state) => state.room);
+    const navigate = useNavigate();
 
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-      
+
         dispatch(fetchcompany())
         dispatch(fetchtopic())
     }, [])
-    
+
 
 
     const [min, setmin] = useState(0)
@@ -36,31 +40,33 @@ const JoinModal = () => {
     }
     const [selectedCompany, setSelectedCompany] = useState("Select");
     const [selectedTopic, setSelectedTopic] = useState("Select");
-    
-    function slectCompany(item){
+
+    function slectCompany(item) {
         setSelectedCompany(item);
     }
 
-    function selectTopic(item){
+    function selectTopic(item) {
         setSelectedTopic(item);
     }
 
-    function create(){
+    function create() {
 
         dispatch(setCreaateRoom({
-            userid:"Madhav",
-            topic:selectedTopic,
-            company:selectedCompany,
+            userid: "Madhav",
+            topic: selectedTopic,
+            company: selectedCompany,
 
         }));
-        console.log(createRoom)
+
+        dispatch(setJoined());
         dispatch(createroom());
-        dispatch(fetchrooms());
+        navigate(`/room/${roomname}`)
+
     }
 
     return (
         <div className='mr-2'>{/* The button to open modal */}
-            <label htmlFor="my-modal-6" className="btn btn-sm ">Create Room</label>
+            <label htmlFor="my-modal-6" className="btn btn-sm " onClick={()=>{dispatch(createRoomName())}}>Create Room</label>
 
             {/* Put this part before </body> tag */}
             <input type="checkbox" id="my-modal-6" className="modal-toggle" />
@@ -72,11 +78,11 @@ const JoinModal = () => {
 
                     <div className="form-control w-full">
                         <p>Select The Companies</p>
-                        <Multiselect items={company?company[0]?.Companies:null} select={slectCompany} value={selectedCompany}/>
+                        <Multiselect items={company ? company[0]?.Companies : null} select={slectCompany} value={selectedCompany} />
                     </div>
                     <div >
                         <p>Select the Topics</p>
-                        <Multiselect items={topic?topic[0]?.Topics:null} select={selectTopic} value={selectedTopic} />
+                        <Multiselect items={topic ? topic[0]?.Topics : null} select={selectTopic} value={selectedTopic} />
                     </div>
                     <div >
                         <p>Select the Difficulty</p>
@@ -120,14 +126,14 @@ const JoinModal = () => {
                         </div>
                     </div>
                     <div className='flex justify-between'>
-                    <div className="modal-action" >
-                        <label htmlFor="my-modal-6" className="btn">Close!</label>
+                        <div className="modal-action" >
+                            <label htmlFor="my-modal-6" className="btn">Close!</label>
+                        </div>
+                        <div className="modal-action" onClick={create}>
+                            <label htmlFor="my-modal-6" className="btn">Create!</label>
+                        </div>
                     </div>
-                    <div className="modal-action" onClick={create}>
-                        <label htmlFor="my-modal-6" className="btn">Create!</label>
-                    </div>
-                    </div>
-                   
+
                 </div>
             </div></div>
     )

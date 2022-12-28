@@ -49,7 +49,8 @@ export function fetchproblemMetas() {
           },
         }
       );
-      const data = await res.json();
+      var data = await res.json();
+      data = JSON.parse(data)
       dispatch(setproblemMeta(data));
       dispatch(setStatus(STATUSES.IDLE));
     } catch (err) {

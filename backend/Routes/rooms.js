@@ -15,6 +15,7 @@ router.get("/", async function (req, res) {
 //Create a new Rooom
 router.post("/create", async function (req, res) {
   const { userid, name, topic, company, difficulty } = req.body;
+
   try {
     if (!topic && !company && !difficulty) {
       const questions = await getAllProblems();
@@ -93,8 +94,23 @@ router.post("/create", async function (req, res) {
     res.status(500).send(error.message);
   }
 });
+
+//get the room 
+router.get("/:name", async function (req, res) {
+  //When user get added to the room
+  const roomname = req.params.name;
+
+  try {
+    const new_room_data = await ChatRoom.find({ roomname: roomname });
+    res.status(200).send(new_room_data);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send({ error: error.message });
+  }
+  //When user get removed from the room
+});
 //Update the room
-router.put("/join/:name", async function (req, res) {
+router.post("/join/:name", async function (req, res) {
   //When user get added to the room
   const roomname = req.params.name;
   const { userid } = req.body;
@@ -105,6 +121,7 @@ router.put("/join/:name", async function (req, res) {
   try {
     var initial_userList = await getAllUsersFromRoom(roomname);
     initial_userList.push(userid);
+    console.log(initial_userList);
     const new_room_data = await updateRoom(roomname, initial_userList);
     res.status(200).send(new_room_data);
   } catch (error) {

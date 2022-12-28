@@ -56,7 +56,8 @@ export function fetchquestions() {
         dispatch(setStatus(STATUSES.LOADING));
         try {
             var pageno = getState().questions.page 
-            const res = await fetch(`${process.env.REACT_APP_Backend_URL}/problems/difficulty/Easy?page=${pageno}`, {
+            var difficulty = getState().questions.difficulty
+            const res = await fetch(`${process.env.REACT_APP_Backend_URL}/problems/difficulty/${difficulty}?page=${pageno}`, {
                 method: "GET",
                 credentials: "include",
                 headers: {
