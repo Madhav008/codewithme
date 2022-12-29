@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { setproblemMeta } from './ProblemMetaSlice';
+
 export const STATUSES = Object.freeze({
   IDLE: "idle",
   ERROR: "error",
@@ -51,7 +52,7 @@ export const joinedRoomSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setJoined, setStatus, setRoomdata, setRoomName, setProblems, next, previous } = joinedRoomSlice.actions
+export const { setJoined, setStatus, setRoomdata, setRoomName, setProblems, next, previous} = joinedRoomSlice.actions
 
 export default joinedRoomSlice.reducer
 

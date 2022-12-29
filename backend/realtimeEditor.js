@@ -2,40 +2,20 @@
 const ACTIONS = require('./Action');
 
 function createSocket(socket) {
-    console.log('socket connected', socket.id);
+    console.log(`User Connected: ${socket.id}`);
 
-    socket.on(ACTIONS.JOIN, ({ roomId, username }) => {
-        console.log('join', roomId, username);
-        // userSocketMap[socket.id] = username;
-        // socket.join(roomId);
-        // const clients = getAllConnectedClients(roomId);
-        // clients.forEach(({ socketId }) => {
-        //     io.to(socketId).emit(ACTIONS.JOINED, {
-        //         clients,
-        //         username,
-        //         socketId: socket.id,
-        //     });
-        // });
+    socket.on("join_room", (data) => {
+      socket.join(data);
+      console.log(`User with ID: ${socket.id} joined room: ${data}`);
     });
-
-    socket.on(ACTIONS.CODE_CHANGE, ({ roomId, code }) => {
-        socket.in(roomId).emit(ACTIONS.CODE_CHANGE, { code });
+  
+    socket.on("send_message", (data) => {
+      console.log(`User with ID: ${data.author} sent message: ${data.message}`);
+      socket.to(data.room).emit("receive_message", data);
     });
-
-    socket.on(ACTIONS.SYNC_CODE, ({ socketId, code }) => {
-        io.to(socketId).emit(ACTIONS.CODE_CHANGE, { code });
-    });
-
-    socket.on('disconnecting', () => {
-        // const rooms = [...socket.rooms];
-        // rooms.forEach((roomId) => {
-        //     socket.in(roomId).emit(ACTIONS.DISCONNECTED, {
-        //         socketId: socket.id,
-        //         username: userSocketMap[socket.id],
-        //     });
-        // });
-        // delete userSocketMap[socket.id];
-        socket.leave();
+  
+    socket.on("disconnect", () => {
+      console.log("User Disconnected", socket.id);
     });
 
 

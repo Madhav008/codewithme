@@ -54,15 +54,7 @@ const Home = () => {
               <Terminal output={output} placeholder={"Output:"} />
             </div>
           </div>
-          <div
-            className={
-              hidden
-                ? "visible absolute h-[82vh] w-[100%]"
-                : "hidden absolute h-[82vh] w-[100%]"
-            }
-          >
-            <ChatComponent />
-          </div>
+          
         </div>
       </div>
     </div>

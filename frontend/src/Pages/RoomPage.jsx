@@ -3,29 +3,35 @@ import toast from "react-hot-toast";
 import Problems from "../components/Problems/Problems";
 import Terminal from "../components/Terminals/Terminal";
 import Runbar from "../components/Navbar/Runbar";
-import ChatComponent from "../components/Chat/ChatComponent";
 import AceEditors from "../components/Ace/AceEditor";
 import InputTerminal from "../components/Terminals/InputTerminal";
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAllRoomProblems, joinTheRoom, setJoined, setRoomName } from "../store/joinedroomSlice";
 import { useParams } from 'react-router-dom';
 import { setproblemMeta } from "../store/ProblemMetaSlice";
-
+import ChatComponent from "../components/Chat/ChatComponent";
+import io from "socket.io-client";
+import { sendMessage } from "../store/chatSlice";
+const socket = io.connect("localhost:5000");
 
 const RoomPage = () => {
     const [output, setoutput] = useState({});
     const [input, setinput] = useState("");
-    const { joined, roomdata, problems } = useSelector((state) => state.joinedroom)
+    const { joined, roomdata, problems,name } = useSelector((state) => state.joinedroom)
     const dispatch = useDispatch()
-
-
+    const joinChat = () => {
+        if (name !== "") {
+            socket.emit("join_room", name);
+        }
+    };
+ 
 
     function getInput(e) {
         e.preventDefault();
         setinput(e.target.value);
     }
 
-    const [hidden, sethidden] = useState(false);
+    const [hidden, sethidden] = useState(true);
 
     function openChatBox() {
         sethidden(!hidden);
@@ -33,16 +39,23 @@ const RoomPage = () => {
     const { roomname } = useParams();
 
     useEffect(() => {
+        joinChat()
         dispatch(setRoomName(roomname))
         dispatch(joinTheRoom())
         if (!joined) {
             dispatch(setJoined())
         }
+
     }, [])
 
+    useEffect(() => {
+        socket.on("receive_message", (data) => {
+            console.log("Received message:", data);
+            dispatch(sendMessage(data))
+            console.log("Dispatched sendMessage action with data:", data);
+        })
+    }, [socket])
 
-
-    
     return (
         <div>
             <Runbar chatbox={openChatBox} />
@@ -73,7 +86,7 @@ const RoomPage = () => {
                                 : "hidden absolute h-[82vh] w-[100%]"
                         }
                     >
-                        <ChatComponent />
+                        <ChatComponent socket={socket}/>
                     </div>
                 </div>
             </div>

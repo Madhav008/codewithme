@@ -7,6 +7,7 @@ import userCodeReducer from "./userCodeSlice";
 import expectedCodeReducer from "./expectedCodeSlice";
 import roomReducer from "./roomSlice";
 import joinedRoomReducer from "./joinedroomSlice";
+import chatReducer from "./chatSlice";
 
 export const store = configureStore({
   reducer: {
@@ -18,5 +19,6 @@ export const store = configureStore({
     usercode: userCodeReducer,
     expectedcode:expectedCodeReducer,
     joinedroom: joinedRoomReducer,
+    chat:chatReducer,
   },
 });

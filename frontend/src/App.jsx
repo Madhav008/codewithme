@@ -1,4 +1,3 @@
-
 import {
     BrowserRouter as Router,
     Routes,
@@ -16,9 +15,9 @@ import QuestionsPage from "./Pages/QuestionsPage";
 import CompilerPage from "./Pages/CompilerPage";
 import RoomPage from "./Pages/RoomPage";
 
+
 const App = () => {
     const [user, setUser] = useState(null);
-
     useEffect(() => {
         const getUser = () => {
             fetch(`${process.env.REACT_APP_Backend_URL}/auth/login/success`, {
@@ -61,7 +60,6 @@ const App = () => {
                     <Route path="/invite" element={<InvitePage />} />
                     <Route path="/room/:roomname" element={<RoomPage />} />
                     <Route exact path="/" element={<QuestionsPage />} />
-
                 </Routes>
 
             </Router>
