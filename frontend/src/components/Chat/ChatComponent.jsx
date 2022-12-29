@@ -8,7 +8,9 @@ import { sendMessage, setCurrentMessage } from '../../store/chatSlice';
 const ChatComponent = ({socket}) => {
     
     const { roomdata, name } = useSelector((state) => state.joinedroom)
+    const {user} = useSelector((state) => state.user)
     const { currentMessage, messages } = useSelector((state) => state.chat);
+    
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -24,7 +26,7 @@ const ChatComponent = ({socket}) => {
         if (currentMessage !== "") {
             const data = {
                 room: name,
-                author: "Madhav",
+                author: user.username,
                 message: currentMessage,
                 time:
                     new Date(Date.now()).getHours() +
@@ -61,7 +63,7 @@ const ChatComponent = ({socket}) => {
                         messages[0] ? messages.map((data, index) => (
                             <div key={index}>
                                 {
-                                    data.author === "Madhav" ? (
+                                    data.author === user.username ? (
                                         <div className="chat chat-end">
                                             <div className="chat-bubble chat-bubble-primary opacity-[0.8]">{data.message}</div>
                                         </div>

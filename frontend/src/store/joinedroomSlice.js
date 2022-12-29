@@ -61,6 +61,7 @@ export function leaveTheRoom() {
     dispatch(setStatus(STATUSES.LOADING));
 
     var roomname = getState().joinedroom.name;
+    var user = getState().user.user
     try {
       const res = await fetch(`${process.env.REACT_APP_Backend_URL}/room/leave/${roomname}`, {
         method: "POST",
@@ -70,7 +71,7 @@ export function leaveTheRoom() {
           "Content-Type": "application/json",
           "Access-Control-Allow-Credentials": true,
         },
-        body: JSON.stringify({ userid: "MadhavReact" })
+        body: JSON.stringify({ userid: user.username })
       });
       await res.json();
       // dispatch(setRoomdata(data));
@@ -91,6 +92,8 @@ export function joinTheRoom() {
     dispatch(setStatus(STATUSES.LOADING));
 
     var roomname = getState().joinedroom.name;
+    var user = getState().user.user
+
     try {
       const res = await fetch(`${process.env.REACT_APP_Backend_URL}/room/join/${roomname}`, {
         method: "POST",
@@ -100,7 +103,7 @@ export function joinTheRoom() {
           "Content-Type": "application/json",
           "Access-Control-Allow-Credentials": true,
         },
-        body: JSON.stringify({ userid: "MadhavReact" })
+        body: JSON.stringify({ userid:user.username })
       });
       await res.json();
       // dispatch(setRoomdata(data));

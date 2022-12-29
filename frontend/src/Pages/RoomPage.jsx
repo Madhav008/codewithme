@@ -50,9 +50,7 @@ const RoomPage = () => {
 
     useEffect(() => {
         socket.on("receive_message", (data) => {
-            console.log("Received message:", data);
             dispatch(sendMessage(data))
-            console.log("Dispatched sendMessage action with data:", data);
         })
     }, [socket])
 

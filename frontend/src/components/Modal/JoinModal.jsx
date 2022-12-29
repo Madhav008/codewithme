@@ -11,6 +11,7 @@ const JoinModal = () => {
 
     const { data: company } = useSelector((state) => state.companies);
     const { data: topic } = useSelector((state) => state.topics);
+    const { user } = useSelector((state) => state.user);
     const { roomname } = useSelector((state) => state.room);
     const navigate = useNavigate();
 
@@ -52,7 +53,7 @@ const JoinModal = () => {
     function create() {
 
         dispatch(setCreaateRoom({
-            userid: "Madhav",
+            userid: user.username,
             topic: selectedTopic,
             company: selectedCompany,
 
