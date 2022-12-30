@@ -3,16 +3,16 @@ import Multiselect from '../MultiSelectComp/Multiselect'
 import { useDispatch, useSelector } from "react-redux";
 import { fetchcompany } from '../../store/companiesSlice';
 import { fetchtopic } from '../../store/topicsSlice'
-import {  createroom, createRoomName, setCreaateRoom } from '../../store/roomSlice';
 import { setJoined } from '../../store/joinedroomSlice';
 import { useNavigate } from 'react-router-dom';
+import { createroom, createRoomdata, createRoomName } from '../../store/createRoomSlice';
 
 const JoinModal = () => {
 
     const { data: company } = useSelector((state) => state.companies);
     const { data: topic } = useSelector((state) => state.topics);
     const { user } = useSelector((state) => state.user);
-    const { roomname } = useSelector((state) => state.room);
+    const { roomname } = useSelector((state) => state.createRoom);
     const navigate = useNavigate();
 
 
@@ -52,7 +52,7 @@ const JoinModal = () => {
 
     function create() {
 
-        dispatch(setCreaateRoom({
+        dispatch(createRoomdata({
             userid: user.username,
             topic: selectedTopic,
             company: selectedCompany,

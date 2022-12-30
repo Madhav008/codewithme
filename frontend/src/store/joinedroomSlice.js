@@ -75,7 +75,7 @@ export function leaveTheRoom() {
       });
       await res.json();
       // dispatch(setRoomdata(data));
-
+      dispatch(setRoomdata({}))
       dispatch(setStatus(STATUSES.IDLE));
     } catch (err) {
       console.log(err);
