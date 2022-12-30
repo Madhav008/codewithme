@@ -40,9 +40,9 @@ const RoomPage = () => {
 
     useEffect(() => {
         joinChat()
-        dispatch(setRoomName(roomname))
-        dispatch(joinTheRoom())
         if (!joined) {
+            dispatch(setRoomName(roomname))
+            dispatch(joinTheRoom())
             dispatch(setJoined())
         }
 

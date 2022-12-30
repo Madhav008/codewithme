@@ -56,7 +56,6 @@ const JoinModal = () => {
             userid: user.username,
             topic: selectedTopic,
             company: selectedCompany,
-
         }));
 
         dispatch(setJoined());

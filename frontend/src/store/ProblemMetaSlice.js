@@ -50,7 +50,6 @@ export function fetchproblemMetas() {
         }
       );
       var data = await res.json();
-      data = JSON.parse(data)
       dispatch(setproblemMeta(data));
       dispatch(setStatus(STATUSES.IDLE));
     } catch (err) {

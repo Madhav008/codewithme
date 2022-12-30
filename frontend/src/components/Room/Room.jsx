@@ -17,7 +17,6 @@ const Room = () => {
 
     function onJoinRoom(room) {
         dispatch(setRoomdata(room))
-        dispatch(setJoined());
     }
 
 if (STATUSES.LOADING == status) {

@@ -15,17 +15,14 @@ const Problems = () => {
     const { pid } = useParams();
 
     useEffect(() => {
-        if (joined) {
-            dispatch(setPid(pid))
-            dispatch(fetchproblemMetas())
-        }
-        
+        dispatch(setPid(pid))
+        dispatch(fetchproblemMetas())
     }, [])
-    
+
     if (status === STATUSES.LOADING) {
         return <h2>Loading....</h2>;
     }
-    
+
     function nextQuestion() {
         console.log("NEXT")
         dispatch(next());
@@ -44,7 +41,7 @@ const Problems = () => {
             <>
                 {problems[0] ? <div className='problems p-3 overflow-y-scroll text-white h-[100%]'>
                     <div className='flex justify-between'>
-                    <h1 className='text-lg font-bold pb-2'>{questions.title} :</h1>
+                        <h1 className='text-lg font-bold pb-2'>{questions.title} :</h1>
 
                         <div className='w-max ml-auto flex gap-1'>
                             <button onClick={previousQuestion} className="btn btn-square btn-sm">
