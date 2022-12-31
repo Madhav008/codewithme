@@ -13,7 +13,6 @@ export const joinedRoomSlice = createSlice({
     roomdata: {},
     status: STATUSES.IDLE,
     name: '',
-    problems: [],
     number: 0,
   },
   reducers: {
@@ -28,9 +27,6 @@ export const joinedRoomSlice = createSlice({
     },
     setRoomName: (state, action) => {
       state.name = action.payload;
-    },
-    setProblems: (state, action) => {
-      state.problems.push(action.payload);
     },
     next: (state, action) => {
       if (state.number == 3) {
@@ -52,7 +48,7 @@ export const joinedRoomSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setJoined, setStatus, setRoomdata, setRoomName, setProblems, next, previous} = joinedRoomSlice.actions
+export const { setJoined, setStatus, setRoomdata, setRoomName, next, previous} = joinedRoomSlice.actions
 
 export default joinedRoomSlice.reducer
 
@@ -106,6 +102,7 @@ export function joinTheRoom() {
         body: JSON.stringify({ userid:user.username })
       });
       await res.json();
+      console.log("Joined the room now fetching the roomdata");
       // dispatch(setRoomdata(data));
       dispatch(fetchTheRoomData());
       dispatch(setStatus(STATUSES.IDLE));
@@ -128,13 +125,13 @@ export function fetchTheRoomData() {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          "Access-Control-Allow-Credentials": true,
+          "Access-Control-Allow-Credentials":true,
         },
       });
       const data = await res.json();
       dispatch(setRoomdata(data));
+      console.log("the roomdata"+data);
       dispatch(setStatus(STATUSES.IDLE));
-      dispatch(fetchAllRoomProblems())
     } catch (err) {
       console.log(err);
       dispatch(setStatus(STATUSES.ERROR));
@@ -143,36 +140,3 @@ export function fetchTheRoomData() {
 }
 
 
-export function fetchAllRoomProblems() {
-  return async function fetchAllRoomProblemsThunk(dispatch, getState) {
-    dispatch(setStatus(STATUSES.LOADING));
-    var questions = getState().joinedroom.roomdata[0].questions;
-    var lastdata;
-    try {
-      for (const question of questions) {
-        const pid = question.id;
-        console.log(pid);
-        const res = await fetch(
-          `${process.env.REACT_APP_Backend_URL}/info/${pid}`,
-          {
-            method: "GET",
-            credentials: "include",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-              "Access-Control-Allow-Credentials": true,
-            },
-          }
-        );
-        const data = await res.json();
-        dispatch(setProblems(data));
-        dispatch(setStatus(STATUSES.IDLE));
-        lastdata = data
-      }
-      dispatch(setproblemMeta(lastdata))
-    } catch (err) {
-      console.log(err);
-      dispatch(setStatus(STATUSES.ERROR));
-    }
-  };
-}

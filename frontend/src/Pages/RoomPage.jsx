@@ -6,7 +6,7 @@ import Runbar from "../components/Navbar/Runbar";
 import AceEditors from "../components/Ace/AceEditor";
 import InputTerminal from "../components/Terminals/InputTerminal";
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchAllRoomProblems, joinTheRoom, setJoined, setRoomName } from "../store/joinedroomSlice";
+import { fetchTheRoomData, joinTheRoom, setJoined, setRoomName } from "../store/joinedroomSlice";
 import { useParams } from 'react-router-dom';
 import { setproblemMeta } from "../store/ProblemMetaSlice";
 import ChatComponent from "../components/Chat/ChatComponent";
@@ -17,14 +17,15 @@ const socket = io.connect("localhost:5000");
 const RoomPage = () => {
     const [output, setoutput] = useState({});
     const [input, setinput] = useState("");
-    const { joined, roomdata, problems,name } = useSelector((state) => state.joinedroom)
+    const { joined, roomdata ,name} = useSelector((state) => state.joinedroom)
+
     const dispatch = useDispatch()
     const joinChat = () => {
         if (name !== "") {
             socket.emit("join_room", name);
         }
     };
- 
+
 
     function getInput(e) {
         e.preventDefault();
@@ -40,10 +41,10 @@ const RoomPage = () => {
 
     useEffect(() => {
         joinChat()
-        if (!joined) {
-            dispatch(setRoomName(roomname))
-            dispatch(joinTheRoom())
+        if (joined === false) {
             dispatch(setJoined())
+            dispatch(setRoomName(roomname))
+            dispatch(joinTheRoom())   
         }
 
     }, [])

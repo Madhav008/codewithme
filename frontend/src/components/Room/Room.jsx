@@ -15,9 +15,7 @@ const Room = () => {
     }, [])
 
 
-    function onJoinRoom(room) {
-        dispatch(setRoomdata(room))
-    }
+   
 
 if (STATUSES.LOADING == status) {
         return <h1>Loading</h1>
@@ -30,7 +28,7 @@ if (STATUSES.LOADING == status) {
                     <div className="flex w-auto justify-center align-middle">
                         <h2 className="text-sm card-title mx-5 w-auto truncate">{room.roomname}</h2>
                         <Link to={`/room/${room.roomname}`}>
-                            <button onClick={() => onJoinRoom(room)} className="btn-sm bg-primary hover:bg-primary-focus text-white font-bold px-4 rounded mt-1">Join</button>
+                            <button className="btn-sm bg-primary hover:bg-primary-focus text-white font-bold px-4 rounded mt-1">Join</button>
                         </Link>
                     </div>
                 </div>)) : null}
