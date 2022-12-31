@@ -3,40 +3,39 @@ import { useDispatch, useSelector } from 'react-redux'
 import { leaveTheRoom } from '../../store/joinedroomSlice'
 import { useNavigate } from 'react-router-dom';
 import ScrollToBottom from "react-scroll-to-bottom";
-import { sendMessage, setCurrentMessage } from '../../store/chatSlice';
+// import { sendMessage, setCurrentMessage } from '../../store/chatSlice';
 
-const ChatComponent = ({socket}) => {
+const ChatComponent = ({setCurrentMessage,currentMessage,socket}) => {
     
     const { roomdata, name } = useSelector((state) => state.joinedroom)
     const {user} = useSelector((state) => state.user)
-    const { currentMessage, messages } = useSelector((state) => state.chat);
+    // const { currentMessage, messages } = useSelector((state) => state.chat);
     
-
+    const [message, setMessage] = useState('')
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
 
 
     const handleMessageChange = (event) => {
-        dispatch(setCurrentMessage(event.target.value));
+        setMessage(event.target.value);
     };
 
  
     const sendMsg = () => {
-        if (currentMessage !== "") {
+        if (message !== "") {
             const data = {
                 room: name,
                 author: user.username,
-                message: currentMessage,
+                message: message,
                 time:
                     new Date(Date.now()).getHours() +
                     ":" +
                     new Date(Date.now()).getMinutes(),
             };
-            console.log(data);
-            dispatch(sendMessage(data))
+            setCurrentMessage((list)=>[...list,data])
             socket.emit("send_message", data);
-            dispatch(setCurrentMessage(""));
+            setMessage("");
         }
     };
 
@@ -51,16 +50,15 @@ const ChatComponent = ({socket}) => {
 
                         <div className="badge badge-primary text-white">Invite</div>
                         <div onClick={() => { dispatch(leaveTheRoom()); navigate(`/`) }} className="badge badge-accent text-white">Leave</div>
-                        <div className="badge badge-lg "> Joined {roomdata[0]?.users.length}</div>
+                        {roomdata.users?<div className="badge badge-lg "> Joined {roomdata?.users.length}</div>:null}
                     </div>
 
                 </div>
                 {/* Chat Messages */}
                 <ScrollToBottom>
-
                     {
 
-                        messages[0] ? messages.map((data, index) => (
+                        currentMessage ? currentMessage.map((data, index) => (
                             <div key={index}>
                                 {
                                     data.author === user.username ? (
@@ -89,7 +87,7 @@ const ChatComponent = ({socket}) => {
 
                             <input onKeyDown={(event) => {
                                 event.key === "Enter" && sendMsg();
-                            }} onChange={handleMessageChange} value={currentMessage} type="text" className="focus:outline-none bg-transparent w-[90%]"></input>
+                            }} onChange={handleMessageChange} value={message} type="text" className="focus:outline-none bg-transparent w-[90%]"></input>
 
                             <button onClick={sendMsg} className="flex items-center justify-center h-full mx-3">
                                 <svg className="w-4 h-4 transform rotate-45 -mt-px" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

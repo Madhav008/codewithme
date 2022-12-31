@@ -19,12 +19,14 @@ const RoomPage = () => {
     const [output, setoutput] = useState({});
     const [input, setinput] = useState("");
     const { joined, roomdata, name } = useSelector((state) => state.joinedroom)
+    const [currentMessage, setCurrentMessage] = useState([])
 
     const dispatch = useDispatch()
     const joinChat = () => {
         if (name !== "") {
             socket.emit("join_room", name);
         }
+        console.log(name)
     };
 
 
@@ -54,7 +56,8 @@ const RoomPage = () => {
 
     useEffect(() => {
         socket.on("receive_message", (data) => {
-            dispatch(sendMessage(data))
+            setCurrentMessage((list)=>[...list,data])
+            console.log(data);
         })
     }, [socket])
 
@@ -88,7 +91,7 @@ const RoomPage = () => {
                                 : "hidden absolute h-[82vh] w-[100%]"
                         }
                     >
-                        <ChatComponent socket={socket} />
+                        <ChatComponent setCurrentMessage={setCurrentMessage} currentMessage={currentMessage} socket={socket} />
                     </div>
                 </div>
             </div>
