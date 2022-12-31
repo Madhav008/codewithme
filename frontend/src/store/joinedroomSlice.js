@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { setproblemMeta } from './ProblemMetaSlice';
+import { resetProblemMeta, setproblemMeta } from './ProblemMetaSlice';
+import { fetchUser } from './UserSlice';
 
 export const STATUSES = Object.freeze({
   IDLE: "idle",
@@ -19,6 +20,16 @@ export const joinedRoomSlice = createSlice({
     setJoined: (state) => {
       state.joined = !state.joined
     },
+    reset: (state) => {
+      return {
+        joined: false,
+        roomdata: {},
+        status: STATUSES.IDLE,
+        name: '',
+        number: 0,
+      }
+    },
+
     setStatus(state, action) {
       state.status = action.payload;
     },
@@ -48,14 +59,15 @@ export const joinedRoomSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setJoined, setStatus, setRoomdata, setRoomName, next, previous} = joinedRoomSlice.actions
+export const { setJoined, reset, setStatus, setRoomdata, setRoomName, next, previous } = joinedRoomSlice.actions
 
 export default joinedRoomSlice.reducer
 
 export function leaveTheRoom() {
   return async function leaveTheroomThunk(dispatch, getState) {
     dispatch(setStatus(STATUSES.LOADING));
-
+    dispatch(reset())
+    dispatch(resetProblemMeta())
     var roomname = getState().joinedroom.name;
     var user = getState().user.user
     try {
@@ -86,29 +98,30 @@ export function leaveTheRoom() {
 export function joinTheRoom() {
   return async function getroomThunk(dispatch, getState) {
     dispatch(setStatus(STATUSES.LOADING));
-
     var roomname = getState().joinedroom.name;
     var user = getState().user.user
-
-    try {
-      const res = await fetch(`${process.env.REACT_APP_Backend_URL}/room/join/${roomname}`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Credentials": true,
-        },
-        body: JSON.stringify({ userid:user.username })
-      });
-      await res.json();
-      console.log("Joined the room now fetching the roomdata");
-      // dispatch(setRoomdata(data));
-      dispatch(fetchTheRoomData());
-      dispatch(setStatus(STATUSES.IDLE));
-    } catch (err) {
-      console.log(err);
-      dispatch(setStatus(STATUSES.ERROR));
+    
+    if (user.username && roomname) {
+      try {
+        const res = await fetch(`${process.env.REACT_APP_Backend_URL}/room/join/${roomname}`, {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Credentials": true,
+          },
+          body: JSON.stringify({ userid: user.username })
+        });
+        await res.json();
+        console.log("Joined the room now fetching the roomdata");
+        // dispatch(setRoomdata(data));
+        dispatch(fetchTheRoomData());
+        dispatch(setStatus(STATUSES.IDLE));
+      } catch (err) {
+        console.log(err);
+        dispatch(setStatus(STATUSES.ERROR));
+      }
     }
   };
 }
@@ -125,12 +138,12 @@ export function fetchTheRoomData() {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          "Access-Control-Allow-Credentials":true,
+          "Access-Control-Allow-Credentials": true,
         },
       });
       const data = await res.json();
       dispatch(setRoomdata(data));
-      console.log("the roomdata"+data);
+      console.log("the roomdata" + data);
       dispatch(setStatus(STATUSES.IDLE));
     } catch (err) {
       console.log(err);

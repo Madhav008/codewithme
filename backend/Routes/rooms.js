@@ -123,9 +123,8 @@ router.post("/join/:name", async function (req, res) {
   const roomname = req.params.name;
   const { userid } = req.body;
   console.log(userid);
-  if (userid == null) {
-    res.status(500).send({ error: "userid not correct" });
-  }
+  if (userid != null) {
+  
   try {
     var initial_userList = await getAllUsersFromRoom(roomname);
     initial_userList.push(userid);
@@ -135,7 +134,7 @@ router.post("/join/:name", async function (req, res) {
   } catch (error) {
     console.log(error.message);
     res.status(500).send({ error: error.message });
-  }
+  }}
   //When user get removed from the room
 });
 
@@ -173,10 +172,14 @@ async function getAllUsersFromRoom(roomname) {
 }
 
 async function updateRoom(roomname, userslist) {
-  return await ChatRoom.findOneAndUpdate(
-    { roomname: roomname },
-    { users: userslist }
-  );
+  try {
+    return await ChatRoom.findOneAndUpdate(
+      { roomname: roomname },
+      { users: userslist }
+    );
+  } catch (error) {
+    console.log(error.message);
+  }
 }
 
 //Delete the room

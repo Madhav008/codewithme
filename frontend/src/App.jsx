@@ -15,39 +15,15 @@ import InvitePage from "./Pages/InvitePage";
 import QuestionsPage from "./Pages/QuestionsPage";
 import CompilerPage from "./Pages/CompilerPage";
 import RoomPage from "./Pages/RoomPage";
-import io from "socket.io-client";
-import { useDispatch } from "react-redux";
-import { setUserdata } from "./store/UserSlice";
-const socket = io.connect("localhost:5000");
-
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUser, setUserdata } from "./store/UserSlice";
 
 const App = () => {
-    const [user, setUser] = useState(null);
+    const { user } = useSelector((state) => state.user)
     const dispatch = useDispatch()
     useEffect(() => {
-        const getUser = () => {
-            fetch(`${process.env.REACT_APP_Backend_URL}/auth/login/success`, {
-                method: "GET",
-                credentials: "include",
-                headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Credentials": true,
-                },
-            })
-                .then((response) => {
-                    if (response.status === 200) return response.json();
-                    throw new Error("authentication has been failed!");
-                })
-                .then((resObject) => {
-                    setUser(resObject.user);
-                    dispatch(setUserdata(resObject.user))
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        };
-        getUser();
+
+        dispatch(fetchUser())
     }, []);
 
     return (

@@ -211,7 +211,6 @@ export function createroom() {
                 }
             );
             const data = await res.json();
-            dispatch(fetchTheRoomData());
             dispatch(setStatus(STATUSES.IDLE));
         } catch (err) {
             console.log(err);

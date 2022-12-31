@@ -23,11 +23,17 @@ const problemMetaSlice = createSlice({
     setPid(state, action) {
       state.pid = action.payload;
     },
- 
+    resetProblemMeta(state){
+      return  {
+        data: {},
+        status: STATUSES.IDLE,
+        pid: "",
+      }
+    }
   },
 });
 
-export const { setproblemMeta, setStatus, setPid } =
+export const { setproblemMeta, setStatus, setPid,resetProblemMeta } =
   problemMetaSlice.actions;
 export default problemMetaSlice.reducer;
 

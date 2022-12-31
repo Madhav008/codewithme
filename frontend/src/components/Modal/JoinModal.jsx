@@ -51,22 +51,19 @@ const JoinModal = () => {
     }
 
     function create() {
-
+        dispatch(setJoined())
         dispatch(createRoomdata({
             userid: user.username,
             topic: selectedTopic,
             company: selectedCompany,
-        }));
-
-        dispatch(setJoined());
-        dispatch(createroom());
-        navigate(`/room/${roomname}`)
-
+        }))
+        dispatch(createroom())
+            .then(() => navigate(`/room/${roomname}`))
     }
 
     return (
         <div className='mr-2'>{/* The button to open modal */}
-            <label htmlFor="my-modal-6" className="btn btn-sm " onClick={()=>{dispatch(createRoomName())}}>Create Room</label>
+            <label htmlFor="my-modal-6" className="btn btn-sm " onClick={() => { dispatch(createRoomName()) }}>Create Room</label>
 
             {/* Put this part before </body> tag */}
             <input type="checkbox" id="my-modal-6" className="modal-toggle" />
