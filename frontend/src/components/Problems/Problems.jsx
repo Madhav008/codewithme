@@ -9,23 +9,32 @@ import { MdArrowBackIos, MdArrowForwardIos } from 'react-icons/md';
 import { next, previous } from '../../store/joinedroomSlice';
 
 const Problems = () => {
-    const { data: questions, status } = useSelector((state) => state.problemMeta)
-    const { joined, roomdata, problems, number } = useSelector((state) => state.joinedroom)
+    const { data: questions, status:problem_status } = useSelector((state) => state.problemMeta)
+    const { joined, roomdata, number ,status:joined_status} = useSelector((state) => state.joinedroom)
+    const problems = roomdata.questions;
     const dispatch = useDispatch();
     const { pid } = useParams();
 
+
+    
+
+    
     useEffect(() => {
-        if (joined) {
+        if (joined_status === false) {
             dispatch(setPid(pid))
             dispatch(fetchproblemMetas())
+        }else{
+            if(problems)
+            dispatch(setproblemMeta(problems[number]))
         }
-        
-    }, [])
-    
-    if (status === STATUSES.LOADING) {
+    }, [joined_status,problems])
+
+
+
+
+    if (joined_status === STATUSES.LOADING) {
         return <h2>Loading....</h2>;
     }
-    
     function nextQuestion() {
         console.log("NEXT")
         dispatch(next());
@@ -38,13 +47,12 @@ const Problems = () => {
         dispatch(setproblemMeta(problems[number]))
     }
 
-
     if (joined) {
         return (
             <>
-                {problems[0] ? <div className='problems p-3 overflow-y-scroll text-white h-[100%]'>
+                {problems ? <div className='problems p-3 overflow-y-scroll text-white h-[100%]'>
                     <div className='flex justify-between'>
-                    <h1 className='text-lg font-bold pb-2'>{questions.title} :</h1>
+                        <h1 className='text-lg font-bold pb-2'>{questions.title} :</h1>
 
                         <div className='w-max ml-auto flex gap-1'>
                             <button onClick={previousQuestion} className="btn btn-square btn-sm">

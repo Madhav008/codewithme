@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const ChatRoom = require("../Models/ChatRoom");
+const MetaInfo = require("../Models/Metainfo");
 
 //Get All the rooms
 router.get("/", async function (req, res) {
@@ -99,10 +100,17 @@ router.post("/create", async function (req, res) {
 router.get("/:name", async function (req, res) {
   //When user get added to the room
   const roomname = req.params.name;
-
+  console.log(roomname);
   try {
     const new_room_data = await ChatRoom.find({ roomname: roomname });
-    res.status(200).send(new_room_data);
+
+    const qusetions_id = new_room_data[0].questions;
+    var problems = [];
+    for (const question of qusetions_id) {
+      const problem = await MetaInfo.find({ slug: question.slug }).select('-url');
+      problems.push(problem[0]);
+    }
+    res.status(200).send({ 'users': new_room_data[0].users, 'roomname': new_room_data[0].roomname, 'questions': problems });
   } catch (error) {
     console.log(error.message);
     res.status(500).send({ error: error.message });
@@ -115,9 +123,8 @@ router.post("/join/:name", async function (req, res) {
   const roomname = req.params.name;
   const { userid } = req.body;
   console.log(userid);
-  if (userid == null) {
-    res.status(500).send({ error: "userid not correct" });
-  }
+  if (userid != null) {
+  
   try {
     var initial_userList = await getAllUsersFromRoom(roomname);
     initial_userList.push(userid);
@@ -127,7 +134,7 @@ router.post("/join/:name", async function (req, res) {
   } catch (error) {
     console.log(error.message);
     res.status(500).send({ error: error.message });
-  }
+  }}
   //When user get removed from the room
 });
 
@@ -165,10 +172,14 @@ async function getAllUsersFromRoom(roomname) {
 }
 
 async function updateRoom(roomname, userslist) {
-  return await ChatRoom.findOneAndUpdate(
-    { roomname: roomname },
-    { users: userslist }
-  );
+  try {
+    return await ChatRoom.findOneAndUpdate(
+      { roomname: roomname },
+      { users: userslist }
+    );
+  } catch (error) {
+    console.log(error.message);
+  }
 }
 
 //Delete the room

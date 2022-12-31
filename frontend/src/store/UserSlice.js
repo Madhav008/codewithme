@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    userdata: {}
+    user: {}
 };
 
 export const STATUSES = Object.freeze({
@@ -26,4 +26,34 @@ const userSlice = createSlice({
 export const { setUserdata, setStatus } = userSlice.actions;
 
 export default userSlice.reducer;
+
+
+// Thunks
+export function fetchUser() {
+    return async function fetchUserThunk(dispatch, getState) {
+        dispatch(setStatus(STATUSES.LOADING));
+        try {
+            const res = await fetch(`${process.env.REACT_APP_Backend_URL}/auth/login/success`, {
+                method: "GET",
+                credentials: "include",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Credentials": true,
+                },
+            })
+
+            
+
+            const user = await res.json();
+
+            console.log(user.user)
+            dispatch(setUserdata(user.user))
+            dispatch(setStatus(STATUSES.IDLE));
+        } catch (err) {
+            console.log(err);
+            dispatch(setStatus(STATUSES.ERROR));
+        }
+    };
+}
 
