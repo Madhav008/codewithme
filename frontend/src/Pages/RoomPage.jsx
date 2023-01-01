@@ -49,7 +49,6 @@ const RoomPage = () => {
                 .then(() => dispatch(setJoined()))
                 .then(() => dispatch(setRoomName(roomname)))
                 .then(() => dispatch(joinTheRoom()));
-
         }
 
     }, [])

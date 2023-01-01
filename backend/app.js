@@ -65,6 +65,11 @@ app.use('/info',MetaRoute);
 
 const ChatRoom = require('./Routes/rooms')
 app.use('/room',ChatRoom);
+
+
+const SolvedProblems = require('./Routes/solved_problems')
+app.use('/my',SolvedProblems);
+
 // const SeederRoute = require('./seeder')
 // app.use('/seeder',SeederRoute);
 

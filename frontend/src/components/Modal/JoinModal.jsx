@@ -52,16 +52,16 @@ const JoinModal = () => {
     }
 
     function create() {
-        dispatch(setJoined())
+        // dispatch(setJoined())
         dispatch(createRoomdata({
             userid: user.username,
             topic: selectedTopic,
             company: selectedCompany,
         }))
-        dispatch(createroom()) 
-        .then(() => dispatch(fetchUser()))
-        .then(() => dispatch(setRoomName(roomname)))
-        .then(() => dispatch(joinTheRoom()))
+        dispatch(createroom()) //CREATE THE ROOM AND PUSH THE USER ID
+        // .then(() => dispatch(fetchUser()))
+        // .then(() => dispatch(setRoomName(roomname)))
+        // .then(() => dispatch(joinTheRoom()))// JOIN THE ROOM AND PUSH THE USER ID
         .then(() => navigate(`/room/${roomname}`))
     }
 
