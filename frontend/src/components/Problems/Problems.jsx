@@ -15,19 +15,16 @@ const Problems = () => {
     const dispatch = useDispatch();
     const { pid } = useParams();
 
-
-    
-
     
     useEffect(() => {
-        if (joined_status === false) {
+        if (joined ===false) {
             dispatch(setPid(pid))
             dispatch(fetchproblemMetas())
         }else{
             if(problems)
             dispatch(setproblemMeta(problems[number]))
         }
-    }, [joined_status,problems])
+    }, [joined,problems])
 
 
 

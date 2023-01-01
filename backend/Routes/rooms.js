@@ -22,7 +22,7 @@ router.post("/create", async function (req, res) {
       const questions = await getAllProblems();
       const new_room = new ChatRoom({
         roomname: name,
-        users: [userid],
+        users: [],
         questions: questions,
       });
       const room = await new_room.save();
@@ -31,7 +31,7 @@ router.post("/create", async function (req, res) {
       const questions = await getProblemByTopic(topic);
       const new_room = new ChatRoom({
         roomname: name,
-        users: [userid],
+        users: [],
         questions: questions,
       });
       const room = await new_room.save();
@@ -40,7 +40,7 @@ router.post("/create", async function (req, res) {
       const questions = await getProblemByCompany(company);
       const new_room = new ChatRoom({
         roomname: name,
-        users: [userid],
+        users: [],
         questions: questions,
       });
       const room = await new_room.save();
@@ -49,7 +49,7 @@ router.post("/create", async function (req, res) {
       const questions = await getProblemByDifficulty(difficulty);
       const new_room = new ChatRoom({
         roomname: name,
-        users: [userid],
+        users: [],
         questions: questions,
       });
       const room = await new_room.save();
@@ -58,7 +58,7 @@ router.post("/create", async function (req, res) {
       const questions = await getProblemByCompany_Topic(company, topic);
       const new_room = new ChatRoom({
         roomname: name,
-        users: [userid],
+        users: [],
         questions: questions,
       });
       const room = await new_room.save();
@@ -67,7 +67,7 @@ router.post("/create", async function (req, res) {
       const questions = await getProblemByDifficulty_Topic(difficulty, topic);
       const new_room = new ChatRoom({
         roomname: name,
-        users: [userid],
+        users: [],
         questions: questions,
       });
       const room = await new_room.save();
@@ -76,7 +76,7 @@ router.post("/create", async function (req, res) {
       const questions = await getProblemByCompany_Difficulty(company, difficulty);
       const new_room = new ChatRoom({
         roomname: name,
-        users: [userid],
+        users: [],
         questions: questions,
       });
       const room = await new_room.save();
@@ -85,7 +85,7 @@ router.post("/create", async function (req, res) {
       const questions = await getProblemByCompany_Difficulty_Topic(company, difficulty, topic);
       const new_room = new ChatRoom({
         roomname: name,
-        users: [userid],
+        users: [],
         questions: questions,
       });
       const room = await new_room.save();

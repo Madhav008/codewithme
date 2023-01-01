@@ -10,9 +10,10 @@ function createSocket(socket) {
     });
   
     socket.on("send_message", (data) => {
-      console.log(`User with ID: ${data.author} sent message: ${data.message}`);
       socket.to(data.room).emit("receive_message", data);
+      console.log(`User with ID: ${data.room} sent message: ${data.message}`);
     });
+    
   
     socket.on("disconnect", () => {
       console.log("User Disconnected", socket.id);

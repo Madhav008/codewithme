@@ -19,7 +19,7 @@ const Navbar = ({ user }) => {
                         <Link className="btn btn-ghost  cursor-pointer font-bold  " to="/ide">
                            Online IDE
                         </Link>
-                    {user ? (<ul className="flex space-x-4 items-center">
+                    {user.displayName ? (<ul className="flex space-x-4 items-center">
                         <li className=" text-lg">{user.displayName}</li>
                         <li onClick={logout} className="btn btn-primary	btn-sm ">Logout</li>
                     </ul>) : (<Link className="btn btn-primary btn-sm	" to="login">

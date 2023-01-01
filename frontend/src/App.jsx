@@ -17,6 +17,7 @@ import CompilerPage from "./Pages/CompilerPage";
 import RoomPage from "./Pages/RoomPage";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser, setUserdata } from "./store/UserSlice";
+import ChatComponent from "./components/Chat/ChatComponent";
 
 const App = () => {
     const { user } = useSelector((state) => state.user)
@@ -44,6 +45,8 @@ const App = () => {
                     <Route path="/problem/:pid" element={<Home />} />
                     <Route exact path="/" element={<QuestionsPage />} />
                     <Route path="/room/:roomname" element={<RoomPage />} />
+                    <Route path="/chat" element={<ChatComponent />} />
+
                 </Routes>
 
             </Router>

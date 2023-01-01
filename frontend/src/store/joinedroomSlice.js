@@ -66,8 +66,6 @@ export default joinedRoomSlice.reducer
 export function leaveTheRoom() {
   return async function leaveTheroomThunk(dispatch, getState) {
     dispatch(setStatus(STATUSES.LOADING));
-    dispatch(reset())
-    dispatch(resetProblemMeta())
     var roomname = getState().joinedroom.name;
     var user = getState().user.user
     try {
@@ -83,7 +81,8 @@ export function leaveTheRoom() {
       });
       await res.json();
       // dispatch(setRoomdata(data));
-      dispatch(setRoomdata({}))
+      dispatch(reset())
+      dispatch(resetProblemMeta())
       dispatch(setStatus(STATUSES.IDLE));
     } catch (err) {
       console.log(err);
@@ -100,7 +99,7 @@ export function joinTheRoom() {
     dispatch(setStatus(STATUSES.LOADING));
     var roomname = getState().joinedroom.name;
     var user = getState().user.user
-    
+
     if (user.username && roomname) {
       try {
         const res = await fetch(`${process.env.REACT_APP_Backend_URL}/room/join/${roomname}`, {
