@@ -12,14 +12,17 @@ import { setproblemMeta } from "../store/ProblemMetaSlice";
 import ChatComponent from "../components/Chat/ChatComponent";
 import io from "socket.io-client";
 import { sendMessage } from "../store/chatSlice";
+import { StreamChat } from 'stream-chat'
 import { fetchUser } from "../store/UserSlice";
 const socket = io.connect("localhost:5000");
 
 const RoomPage = () => {
+    const serverClient = StreamChat.getInstance('gcgy3fuyqfmv', '6dugba3hktgxm3krn5tgdcctuw3cbnpsxf74qr696qj86vnz7d6r2rgj44bx3nu5');
     const [output, setoutput] = useState({});
     const [input, setinput] = useState("");
     const { joined, roomdata, name } = useSelector((state) => state.joinedroom)
     const [currentMessage, setCurrentMessage] = useState([])
+    const token = serverClient.create_token('john')
 
     const dispatch = useDispatch()
     const joinChat = () => {
