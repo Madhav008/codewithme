@@ -57,7 +57,7 @@ export function fetchquestions() {
         try {
             var pageno = getState().questions.page 
             var difficulty = getState().questions.difficulty
-            const res = await fetch(`${process.env.REACT_APP_Backend_URL}/problems/difficulty/${difficulty}?page=${pageno}`, {
+            const res = await fetch(`/problems/difficulty/${difficulty}?page=${pageno}`, {
                 method: "GET",
                 credentials: "include",
                 headers: {
@@ -83,7 +83,7 @@ export function searchQuestions() {
         try {
             var pageno = getState().questions.page 
             var query = getState().questions.query;
-            const res = await fetch(`${process.env.REACT_APP_Backend_URL}/problems/search/${query}/?page=${pageno}`, {
+            const res = await fetch(`/problems/search/${query}/?page=${pageno}`, {
                 method: "GET",
                 credentials: "include",
                 headers: {
@@ -110,7 +110,7 @@ export function searchQuestionsbycompanyname() {
         try {
             var pageno = getState().questions.page 
             var query = getState().questions.company;
-            const res = await fetch(`${process.env.REACT_APP_Backend_URL}/problems/company/${query}/?page=${pageno}`, {
+            const res = await fetch(`/problems/company/${query}/?page=${pageno}`, {
                 method: "GET",
                 credentials: "include",
                 headers: {
@@ -139,7 +139,7 @@ export function searchQuestionsbyTopics() {
             var pageno = getState().questions.page 
             var query = getState().questions.topic;
             
-            const res = await fetch(`${process.env.REACT_APP_Backend_URL}/problems/topic/?page=${pageno}`, {
+            const res = await fetch(`/problems/topic/?page=${pageno}`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'

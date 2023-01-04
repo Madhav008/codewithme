@@ -44,7 +44,7 @@ export function fetchproblemMetas() {
     try {
       var pid = getState().problemMeta.pid;
       const res = await fetch(
-        `${process.env.REACT_APP_Backend_URL}/info/${pid}`,
+        `/info/${pid}`,
         {
           method: "GET",
           credentials: "include",

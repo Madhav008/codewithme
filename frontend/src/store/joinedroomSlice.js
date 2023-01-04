@@ -69,7 +69,7 @@ export function leaveTheRoom() {
     var roomname = getState().joinedroom.name;
     var user = getState().user.user
     try {
-      const res = await fetch(`${process.env.REACT_APP_Backend_URL}/room/leave/${roomname}`, {
+      const res = await fetch(`/room/leave/${roomname}`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -102,7 +102,7 @@ export function joinTheRoom() {
 
     if (user.username && roomname) {
       try {
-        const res = await fetch(`${process.env.REACT_APP_Backend_URL}/room/join/${roomname}`, {
+        const res = await fetch(`/room/join/${roomname}`, {
           method: "POST",
           credentials: "include",
           headers: {
@@ -131,7 +131,7 @@ export function fetchTheRoomData() {
 
     var roomname = getState().joinedroom.name;
     try {
-      const res = await fetch(`${process.env.REACT_APP_Backend_URL}/room/${roomname}`, {
+      const res = await fetch(`/room/${roomname}`, {
         method: "GET",
         credentials: "include",
         headers: {

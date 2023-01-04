@@ -2,7 +2,7 @@ import React from 'react'
 const MyLogin = () => {
     const login = async (e) => {
         
-        window.open(`${process.env.REACT_APP_Backend_URL}/auth/github`, "_self");        
+        window.open(`/auth/github`, "_self");        
     }
     return (
         <div className='h-screen flex justify-center items-center'>

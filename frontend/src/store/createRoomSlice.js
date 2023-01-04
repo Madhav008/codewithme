@@ -198,7 +198,7 @@ export function createroom() {
             dispatch(addRoom({ roomname: newData.name }));
 
             const res = await fetch(
-                `${process.env.REACT_APP_Backend_URL}/room/create`,
+                `/room/create`,
                 {
                     method: "POST",
                     credentials: "include",

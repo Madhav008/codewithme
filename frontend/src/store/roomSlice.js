@@ -36,7 +36,7 @@ export function fetchrooms() {
 	return async function fetchroomThunk(dispatch, getState) {
 		dispatch(setStatus(STATUSES.LOADING));
 		try {
-			const res = await fetch(`${process.env.REACT_APP_Backend_URL}/room/`, {
+			const res = await fetch(`/room/`, {
 				method: "GET",
 				credentials: "include",
 				headers: {
