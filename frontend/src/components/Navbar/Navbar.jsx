@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = ({ user }) => {
     const logout = () => {
-        window.open(`${process.env.REACT_APP_Backend_URL}/auth/logout`, "_self");
+        window.open(`/auth/logout`, "_self");
     };
     return (
         <>  <nav>

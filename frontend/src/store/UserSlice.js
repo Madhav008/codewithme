@@ -33,7 +33,7 @@ export function fetchUser() {
     return async function fetchUserThunk(dispatch, getState) {
         dispatch(setStatus(STATUSES.LOADING));
         try {
-            const res = await fetch(`${process.env.REACT_APP_Backend_URL}/auth/login/success`, {
+            const res = await fetch(`/auth/login/success`, {
                 method: "GET",
                 credentials: "include",
                 headers: {

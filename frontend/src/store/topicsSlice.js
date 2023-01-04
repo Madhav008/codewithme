@@ -32,7 +32,7 @@ export function fetchtopic() {
     return async function fetchtopicThunk(dispatch, getState) {
         dispatch(setStatus(STATUSES.LOADING));
         try {
-            const res = await fetch(`${process.env.REACT_APP_Backend_URL}/problems/topics`, {
+            const res = await fetch(`/problems/topics`, {
                 method: "GET",
                 credentials: "include",
                 headers: {

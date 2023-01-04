@@ -54,7 +54,7 @@ export function compileProblem() {
 
       var raw = JSON.stringify(submit_data);
 
-      const res = await fetch(`${process.env.REACT_APP_Backend_URL}/compile`, {
+      const res = await fetch(`/compile`, {
         method: "POST",
         headers: myHeaders,
         body: raw,
@@ -92,7 +92,7 @@ export function submitProblem() {
 
       var raw = JSON.stringify(submit_data);
 
-      const res = await fetch(`${process.env.REACT_APP_Backend_URL}/result`, {
+      const res = await fetch(`/result`, {
         method: "POST",
         headers: myHeaders,
         body: raw,

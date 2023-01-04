@@ -49,7 +49,7 @@ export function getExpectedCode() {
 
       var raw = JSON.stringify(submit_data);
 
-      const res = await fetch(`${process.env.REACT_APP_Backend_URL}/run`, {
+      const res = await fetch(`/run`, {
         method: "POST",
         headers: myHeaders,
         body: raw,
