@@ -12,10 +12,10 @@ app.use(express.json())
 
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'http://192.168.1.123:3000','http://192.168.1.123:4000', 'http://codewithme.madhavproject21.tk', 'https://codewithme.madhavproject21.tk'],
+    origin: ['http://192.168.1.123:3000','http://192.168.1.123','https://codewithme.madhavproject21.tk','http://192.168.1.123:4000'],
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
-  })
+ })
 );
 const io = new Server(server, {
   cors: {
