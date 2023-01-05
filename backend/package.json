@@ -23,7 +23,6 @@
     "node-fetch": "^3.3.0",
     "passport": "^0.6.0",
     "passport-github2": "^0.1.12",
-    "puppeteer": "^19.4.1",
     "socket.io": "^4.5.4"
   },
   "devDependencies": {
