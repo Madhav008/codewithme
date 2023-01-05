@@ -12,7 +12,7 @@ app.use(express.json())
 
 app.use(
   cors({
-    origin: process.env.clientURL,
+    origin: ['http://localhost:3000', 'http://192.168.1.123:3000','http://192.168.1.123:4000', 'http://codewithme.madhavproject21.tk', 'https://codewithme.madhavproject21.tk'],
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
@@ -47,28 +47,28 @@ require('./initDB')();
 
 
 const AuthRoute = require('./Routes/passport');
-app.use('/auth',AuthRoute)
+app.use('/auth', AuthRoute)
 
 const JudgeRoute = require('./Routes/judge');
-app.use('/',JudgeRoute);
+app.use('/', JudgeRoute);
 
 const Problems = require('./Routes/problems');
-app.use('/problems',Problems);
+app.use('/problems', Problems);
 
 const SubmissionRoute = require('./Routes/submission')
-app.use('/result',SubmissionRoute);
+app.use('/result', SubmissionRoute);
 
 const CompileAndRunRoute = require('./Routes/compile_run')
-app.use('/',CompileAndRunRoute);
+app.use('/', CompileAndRunRoute);
 const MetaRoute = require('./Routes/problem_meta')
-app.use('/info',MetaRoute);
+app.use('/info', MetaRoute);
 
 const ChatRoom = require('./Routes/rooms')
-app.use('/room',ChatRoom);
+app.use('/room', ChatRoom);
 
 
 const SolvedProblems = require('./Routes/solved_problems')
-app.use('/my',SolvedProblems);
+app.use('/my', SolvedProblems);
 
 // const SeederRoute = require('./seeder')
 // app.use('/seeder',SeederRoute);
