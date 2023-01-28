@@ -32,7 +32,7 @@ export function fetchcompany() {
     return async function fetchcompanyThunk(dispatch, getState) {
         dispatch(setStatus(STATUSES.LOADING));
         try {
-            const res = await fetch(`${process.env.REACT_APP_Backend_URL}/problems/companies`, {
+            const res = await fetch(`/problems/companies`, {
                 method: "GET",
                 credentials: "include",
                 headers: {
