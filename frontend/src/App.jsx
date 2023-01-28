@@ -18,7 +18,7 @@ import RoomPage from "./Pages/RoomPage";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser, setUserdata } from "./store/UserSlice";
 import ChatComponent from "./components/Chat/ChatComponent";
-
+import { PrivateRoutes } from "./components/PrivateRoute";
 const App = () => {
     const { user } = useSelector((state) => state.user)
     const dispatch = useDispatch()
@@ -37,15 +37,18 @@ const App = () => {
             <Router>
                 <Navbar user={user} />
                 <Routes>
-                    {/* <Route path="/" element={user ? <ProtectedRoutes /> : <MyLogin />} /> */}
+                    <Route path="/" element={user ? <QuestionsPage /> : <MyLogin />} />
                     <Route path="/login" element={<MyLogin />} />
-                    <Route path="/logout" element={<MyLogin />} />
-                    <Route path="/ide" element={<CompilerPage />} />
-                    <Route path="/invite" element={<InvitePage />} />
-                    <Route path="/problem/:pid" element={<Home />} />
-                    <Route exact path="/" element={<QuestionsPage />} />
-                    <Route path="/room/:roomname" element={<RoomPage />} />
-                    <Route path="/chat" element={<ChatComponent />} />
+                    <Route element={<PrivateRoutes />}>
+                        <Route path="/logout" element={<MyLogin />} />
+                        <Route path="/ide" element={<CompilerPage />} />
+                        <Route path="/invite" element={<InvitePage />} />
+                        <Route path="/problem/:pid" element={<Home />} />
+                        <Route exact path="/" element={<QuestionsPage />} />
+                        <Route path="/room/:roomname" element={<RoomPage />} />
+                        <Route path="/chat" element={<ChatComponent />} />
+                    </Route>
+
 
                 </Routes>
 
